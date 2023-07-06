@@ -1,0 +1,3 @@
+# fields_bank
+
+This website application was developed using php, bootstrap and javascript and allows the user to view the bank homepage, login to a predetermined account using the following username and password. Once logged in you will be able to view your bank account summary, transfer and loan money and also update your account profile. A php mySQL databse is used to store account data and a CRUD is used to interact with and update the database given the operations performed in the application.
