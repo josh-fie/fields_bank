@@ -1,0 +1,12 @@
+{
+    "name": "joshua/starter",
+    "authors": [
+        {
+            "name": "josh-fie",
+            "email": "josh.fieldhouse@yahoo.com"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "5.3.0"
+    }
+}
