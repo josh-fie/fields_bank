@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="img/icon.png" />
+<?php
+include_once "partials/header.php";
+?>
+  
+  <script defer src="script.js"></script>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <title>Bankist | When Banking meets Minimalist</title>
-
-    <script defer src="script.js"></script>
   </head>
   <body>
     <header class="header">
@@ -38,7 +28,7 @@
           </li>
           <li class="nav__item">
             <a class="nav__link nav__link--btn btn--show-modal" href="#"
-              >Open account</a
+              >Log in</a
             >
           </li>
         </ul>
@@ -294,62 +284,85 @@
       </div>
       <button class="btn btn--show-modal">Open your free account today!</button>
     </section>
+<?php
+echo '<pre>';
+var_dump($_COOKIE);
+echo '</pre>';
 
-    <footer class="footer">
-      <ul class="footer__nav">
-        <li class="footer__item">
-          <a class="footer__link" href="#">About</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Pricing</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Terms of Use</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Privacy Policy</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Careers</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Blog</a>
-        </li>
-        <li class="footer__item">
-          <a class="footer__link" href="#">Contact Us</a>
-        </li>
-      </ul>
-      <img src="img/icon.png" alt="Logo" class="footer__logo" />
-      <p class="footer__copyright">
-        &copy; Copyright by
-        <a
-          class="footer__link twitter-link"
-          target="_blank"
-          href="https://twitter.com/jonasschmedtman"
-          >Jonas Schmedtmann</a
-        >. Use for learning or your portfolio. Don't use to teach. Don't claim
-        as your own product.
-      </p>
-    </footer>
+// Check if Modal cookie exists (errors)
+$persistModal = false;
+
+if (isset($_COOKIE['persistModal'])) {
+  // Cookie exists
+  $persistModal = true;
+} else {
+  // Cookie does not exist
+  $persistModal = false;
+}
+?>
+
+<script>
+  <?php if ($persistModal === true): ?>
+    // Call the JavaScript function if the PHP variable is true
+    openModal();
+  <?php endif; ?>
+</script>
 
     <div class="modal hidden">
       <button class="btn--close-modal">&times;</button>
       <h2 class="modal__header">
-        Open your bank account <br />
-        in just <span class="highlight">5 minutes</span>
+        Login in
+        <!-- <span class="highlight">5 minutes</span> -->
       </h2>
-      <form class="modal__form">
-        <label>First Name</label>
-        <input type="text" />
-        <label>Last Name</label>
-        <input type="text" />
-        <label>Email Address</label>
-        <input type="email" />
-        <button class="btn">Next step &rarr;</button>
+
+<?php
+
+$errors = [];
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  require_once "login.php";
+}
+
+?>
+
+<!-- If errors display them before form -->
+<?php if (!empty($errors)) { ?>
+  <div class="alert alert-danger">
+
+    <?php foreach ($errors as $error) { ?>
+      <div><?php echo $error ?></div>
+    <?php } ?>
+  </div>
+<?php } ?>
+      <!-- LOGIN FORM -->
+      <!-- Submission goes to login.php with post method -->
+      <form action="" method="post" class="modal__form" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          placeholder="Username"
+          class="login__input login__input--user"
+          id="username"
+          name="username"
+        />
+        <!-- In practice, use type="password" -->
+        <label for="password">Password:</label>
+        <input
+          type="text"
+          placeholder="Password"
+          maxlength="4"
+          class="login__input login__input--pin"
+          id="password"
+          name="password"
+        />
+        <button class="login__btn" type="submit">&rarr;</button>
       </form>
     </div>
     <div class="overlay hidden"></div>
 
-    <!-- <script src="script.js"></script> -->
+<?php
+include_once "partials/footer.php";
+?>
   </body>
 </html>

@@ -17,6 +17,7 @@ const tabsContent = document.querySelectorAll('.operations__content');
 // Modal window
 
 const openModal = function (e) {
+  alert("Modal Opened");
   e.preventDefault(); //prevents page from jumping up to the top when a link is clicked.
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');

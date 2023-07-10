@@ -1,39 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="img/icon.png" />
+<?php
+include_once "partials/header.php";
+?>
 
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap"
-      rel="stylesheet"
-    />
+  <script defer src="dash_script.js"></script>
 
-    <link rel="stylesheet" href="dash_style.css" />
-    <title>Bankist</title>
   </head>
   <body>
     <!-- TOP NAVIGATION -->
     <nav>
-      <p class="welcome">Log in to get started</p>
-      <img src="img/logo.png" alt="Logo" class="logo" />
-      <form class="login">
-        <input
-          type="text"
-          placeholder="user"
-          class="login__input login__input--user"
+      <img
+          src="img/logo.png"
+          alt="Bankist logo"
+          class="nav__logo"
+          id="logo"
+          designer="Jonas"
+          data-version-number="3.0"
         />
-        <!-- In practice, use type="password" -->
-        <input
-          type="text"
-          placeholder="PIN"
-          maxlength="4"
-          class="login__input login__input--pin"
-        />
-        <button class="login__btn">&rarr;</button>
-      </form>
+      <div>
+        <button type="button">Manage Account</button>
+        <div class="dropdown">
+          <li>
+            <!-- Redirect to transfer.php -->
+            <a href="#">Transfer Money</a>
+          </li>
+          <li>
+            <!-- Redirect to loan.php -->
+            <a href="#">Request a Loan</a>
+          </li>
+          <li>
+            <!-- Return to Index, destroy session -->
+            <a href="#">Logout</a>
+          </li>
+        </div>
+      </div>
     </nav>
 
     <main class="app">
@@ -119,6 +118,9 @@
       </p>
     </main>
 
-    <script src="dash_script.js"></script>
+<?php
+include_once "partials/footer.php";
+?>
+
   </body>
 </html>
