@@ -1,7 +1,11 @@
 <?php
 
 // session close and destroyed.
+session_start();
 
-// close cookie by setting cookie with a negative timelimit- this will prevent the modal remaining open when redirected back to the index.php.
+session_unset();
+
+session_destroy();
 
 // redirect to index.php
+header("Location: index.php");

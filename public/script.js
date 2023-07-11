@@ -4,8 +4,8 @@ const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
-const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+// const btnCloseModal = document.querySelector('.btn--close-modal');
+// const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const nav = document.querySelector('.nav');
 
@@ -14,30 +14,6 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
 ///////////////////////////////////////
-// Modal window
-
-const openModal = function (e) {
-  alert("Modal Opened");
-  e.preventDefault(); //prevents page from jumping up to the top when a link is clicked.
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
-const closeModal = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
-};
-
-btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-    closeModal();
-  }
-});
 
 //Button Scrolling
 
@@ -465,17 +441,17 @@ logo.classList.contains();
 
 //Types of Events and Event Handlers
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-const alertH1 = function (e) {
-  alert('addEventListener: Great! You are reading the heading :D');
+// const alertH1 = function (e) {
+//   alert('addEventListener: Great! You are reading the heading :D');
 
-  // h1.removeEventListener('mouseenter', alertH1); //removes the event listener after actioned once and won't appear again. This removeEventListener could appear anywhere in the code and could be timed.
-};
+//   // h1.removeEventListener('mouseenter', alertH1); //removes the event listener after actioned once and won't appear again. This removeEventListener could appear anywhere in the code and could be timed.
+// };
 
-h1.addEventListener('mouseenter', alertH1); //mouseenter acts like :hover in Css
+// h1.addEventListener('mouseenter', alertH1); //mouseenter acts like :hover in Css
 
-setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // h1.onmouseenter = function (e) {
 //   alert('addEventListener: Great! You are reading the heading :D');

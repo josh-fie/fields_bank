@@ -1,6 +1,6 @@
 <?php
 
-require_once "../database.php";
+$errors = []; //these errors will be looped through and displayed above the form fields on this page.
 
 // login logic to check $_POST values and validate
 // session_start();
@@ -16,33 +16,116 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!$password) {
         $errors[] = 'Password not provided';
       }
-    
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
 
-    // if(empty($errors)) {
+    if(empty($errors)) {
 
-    //     // Check database for account
-    //     $statement = $pdo->prepare("INSERT INTO products (title, image, description, price, create_date)
-      
-    //             -- VALUES ('$title', '', '$description', $price, '$date')
-    //             VALUES (:title, :image, :description, :price, :date)
-      
-    //     ");
-      
-    //     // If user exists:
-    //     session_start();
+      // echo '<pre>';
+      // var_dump($mysqli);
+      // echo '</pre>';
 
-    //     // Redirect user to the dashboard once login completed.
-    //     header('Location: dashboard.php');
+      $mysqli = require "../database.php";
 
-    //     // If user doesn't exist 
-    //     $errors[] = 'Username or Password incorrect';
-    //     }
-    if(!empty($errors)) {
-    setcookie('persistModal', 'true');
+      // Check database for account
+      $sql = sprintf("SELECT * FROM customers WHERE username='%s'", $mysqli->real_escape_string($_POST['username']));
+
+      $result = $mysqli->query($sql);
+
+      $user = $result->fetch_assoc(); //returns result as an associative array and assigns to $user.
+
+      // if user exists check the password
+      if($user) {
+
+        var_dump($_POST);
+
+        if($user['password'] === $_POST['password']) {
+          echo 'Login successful';
+          // If user exists:
+          session_start();
+
+          $_SESSION["customer_id"] = $user["id"];
+          $_SESSION["name"] = $user["name"];
+
+          // Redirect user to the dashboard once login completed.
+          header('Location: dashboard.php');
+
+        } else {
+          // If user doesn't exist 
+        $errors[] = 'Login Invalid';
+        }
+      }
     };
 }
-
 }
+
+?>
+<?php
+include_once "partials/header.php";
+?>
+  
+  <script defer src="script.js"></script>
+
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <img
+          src="img/logo.png"
+          alt="Bankist logo"
+          class="nav__logo"
+          id="logo"
+          designer="Jonas"
+          data-version-number="3.0"
+        />
+        <ul class="nav__links">
+        <!-- Empty -->
+        </ul>
+      </nav>
+    </header>
+
+      <!-- LOGIN FORM -->
+    <div class="login">
+      <h2 class="login__header">
+        Login in
+      </h2>
+
+      <!-- If errors display them before form -->
+      <?php if (!empty($errors)) { ?>
+        <div class="alert alert-danger">
+
+          <?php foreach ($errors as $error) { ?>
+            <div><?php echo $error ?></div>
+          <?php } ?>
+        </div>
+      <?php } ?>
+
+      <!-- Submission stays on this page and is validated here -->
+      <form action="" method="post" class="login__form" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          placeholder="Username"
+          class="login__input login__input--user"
+          id="username"
+          name="username"
+          value="<?= htmlspecialchars($_POST['username'] ?? "") ?>" 
+        />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          placeholder="Password"
+          maxlength="18"
+          class="login__input login__input--pin"
+          id="password"
+          name="password"
+        />
+        <button class="login__btn" type="submit">&rarr;</button>
+      </form>
+    </div>
+    <div class="overlay"></div>
+
+<?php
+  include_once "partials/footer.php";
+?>
+
+</body>
+</html>

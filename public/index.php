@@ -26,12 +26,8 @@ include_once "partials/header.php";
           <li class="nav__item">
             <a class="nav__link" href="#section--3">Testimonials</a>
           </li>
-          <li class="nav__item">
-            <a class="nav__link nav__link--btn btn--show-modal" href="#"
-              >Log in</a
-            >
-          </li>
         </ul>
+        <a class="nav__link" href="login.php">Login</a>
       </nav>
 
       <div class="header__title">
@@ -284,82 +280,6 @@ include_once "partials/header.php";
       </div>
       <button class="btn btn--show-modal">Open your free account today!</button>
     </section>
-<?php
-echo '<pre>';
-var_dump($_COOKIE);
-echo '</pre>';
-
-// Check if Modal cookie exists (errors)
-$persistModal = false;
-
-if (isset($_COOKIE['persistModal'])) {
-  // Cookie exists
-  $persistModal = true;
-} else {
-  // Cookie does not exist
-  $persistModal = false;
-}
-?>
-
-<script>
-  <?php if ($persistModal === true): ?>
-    // Call the JavaScript function if the PHP variable is true
-    openModal();
-  <?php endif; ?>
-</script>
-
-    <div class="modal hidden">
-      <button class="btn--close-modal">&times;</button>
-      <h2 class="modal__header">
-        Login in
-        <!-- <span class="highlight">5 minutes</span> -->
-      </h2>
-
-<?php
-
-$errors = [];
-
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-  require_once "login.php";
-}
-
-?>
-
-<!-- If errors display them before form -->
-<?php if (!empty($errors)) { ?>
-  <div class="alert alert-danger">
-
-    <?php foreach ($errors as $error) { ?>
-      <div><?php echo $error ?></div>
-    <?php } ?>
-  </div>
-<?php } ?>
-      <!-- LOGIN FORM -->
-      <!-- Submission goes to login.php with post method -->
-      <form action="" method="post" class="modal__form" enctype="multipart/form-data">
-        <label for="username">Username:</label>
-        <input
-          type="text"
-          placeholder="Username"
-          class="login__input login__input--user"
-          id="username"
-          name="username"
-        />
-        <!-- In practice, use type="password" -->
-        <label for="password">Password:</label>
-        <input
-          type="text"
-          placeholder="Password"
-          maxlength="4"
-          class="login__input login__input--pin"
-          id="password"
-          name="password"
-        />
-        <button class="login__btn" type="submit">&rarr;</button>
-      </form>
-    </div>
-    <div class="overlay hidden"></div>
 
 <?php
 include_once "partials/footer.php";

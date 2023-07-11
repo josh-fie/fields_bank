@@ -1,4 +1,11 @@
 <?php
+
+// Session maintained
+session_start();
+// session name and id are persisted.
+
+var_dump($_SESSION);
+
 include_once "partials/header.php";
 ?>
 
@@ -7,7 +14,7 @@ include_once "partials/header.php";
   </head>
   <body>
     <!-- TOP NAVIGATION -->
-    <nav>
+    <nav class="nav">
       <img
           src="img/logo.png"
           alt="Bankist logo"
@@ -16,20 +23,29 @@ include_once "partials/header.php";
           designer="Jonas"
           data-version-number="3.0"
         />
-      <div>
+      <ul class="nav__links">
+        <li class="nav__item">
+          <a class="nav__link" href="transfer.php">Transfer Money</a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="loan.php">Request a Loan</a>
+        </li>
+      </ul>
+      <a class="nav__link" href="index.php">Logout</a>
+      <div class="nav__manage_acc">
         <button type="button">Manage Account</button>
-        <div class="dropdown">
+        <div class="dropdown hidden">
           <li>
             <!-- Redirect to transfer.php -->
-            <a href="#">Transfer Money</a>
+            <a href="transfer.php">Transfer Money</a>
           </li>
           <li>
             <!-- Redirect to loan.php -->
-            <a href="#">Request a Loan</a>
+            <a href="loan.php">Request a Loan</a>
           </li>
           <li>
             <!-- Return to Index, destroy session -->
-            <a href="#">Logout</a>
+            <a href="logout.php">Logout</a>
           </li>
         </div>
       </div>
