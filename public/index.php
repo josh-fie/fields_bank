@@ -9,12 +9,11 @@ include_once "partials/header.php";
     <header class="header">
       <nav class="nav">
         <img
-          src="img/logo.png"
-          alt="Bankist logo"
+          src="img/logo2.png"
+          alt="Field Bank logo"
           class="nav__logo"
           id="logo"
-          designer="Jonas"
-          data-version-number="3.0"
+          designer="Josh Fieldhouse"
         />
         <ul class="nav__links">
           <li class="nav__item">
@@ -29,8 +28,7 @@ include_once "partials/header.php";
         </ul>
         <a class="nav__link" href="login.php">Login</a>
       </nav>
-
-      <div class="header__title">
+      <div class="showcase">
         <h1>
           When
           <!-- Green highlight effect -->
@@ -42,7 +40,7 @@ include_once "partials/header.php";
         <button class="btn--text btn--scroll-to">Learn more &DownArrow;</button>
         <img
           src="img/hero.png"
-          class="header__img"
+          class="showcase__img"
           alt="Minimalist bank items"
         />
       </div>

@@ -4,8 +4,6 @@
 session_start();
 // session name and id are persisted.
 
-var_dump($_SESSION);
-
 include_once "partials/header.php";
 ?>
 
@@ -13,15 +11,29 @@ include_once "partials/header.php";
 
   </head>
   <body>
+
+  <?php 
+  
+  var_dump($_SESSION);
+  
+  $completion = null;
+
+  if($_GET) {
+    var_dump($_GET);
+    $completion = $_GET["completion"];
+    echo '<br>'.$completion;
+  }
+
+  ?>
+    <header>
     <!-- TOP NAVIGATION -->
     <nav class="nav">
       <img
-          src="img/logo.png"
-          alt="Bankist logo"
+          src="img/logo2.png"
+          alt="Field Bank logo"
           class="nav__logo"
           id="logo"
-          designer="Jonas"
-          data-version-number="3.0"
+          designer="Josh Fieldhouse"
         />
       <ul class="nav__links">
         <li class="nav__item">
@@ -50,33 +62,23 @@ include_once "partials/header.php";
         </div>
       </div>
     </nav>
+    </header>
 
     <main class="app">
+      <?php if($completion && $completion !== "Loan Request Unsuccessful") { ?> 
+      <div class="message_banner success"><h2><?php echo $completion ?></h2></div>
+      <?php } else if ($completion && $completion === "Loan Request Unsuccessful") { ?>
+      <div class="message_banner error"><h2><?php echo $completion ?></h2></div>
+      <?php } ?>
       <!-- BALANCE -->
       <div class="balance">
         <div>
           <p class="balance__label">Current balance</p>
           <p class="balance__date">
-            As of <span class="date">05/03/2037</span>
+            As of <span class="date">01/01/0000</span>
           </p>
         </div>
-        <p class="balance__value">0000€</p>
-      </div>
-
-      <!-- MOVEMENTS -->
-      <div class="movements">
-        <div class="movements__row">
-          <div class="movements__type movements__type--deposit">2 deposit</div>
-          <div class="movements__date">3 days ago</div>
-          <div class="movements__value">4 000€</div>
-        </div>
-        <div class="movements__row">
-          <div class="movements__type movements__type--withdrawal">
-            1 withdrawal
-          </div>
-          <div class="movements__date">24/01/2037</div>
-          <div class="movements__value">-378€</div>
-        </div>
+        <p class="balance__value">£00.00</p>
       </div>
 
       <!-- SUMMARY -->
@@ -90,8 +92,24 @@ include_once "partials/header.php";
         <button class="btn--sort">&downarrow; SORT</button>
       </div>
 
+      <!-- MOVEMENTS -->
+      <div class="movements">
+        <div class="movements__row">
+          <div class="movements__type movements__type--deposit"></div>
+          <div class="movements__date"></div>
+          <div class="movements__value"></div>
+        </div>
+        <div class="movements__row">
+          <div class="movements__type movements__type--withdrawal">
+            1 withdrawal
+          </div>
+          <div class="movements__date"></div>
+          <div class="movements__value"></div>
+        </div>
+      </div>
+
       <!-- OPERATION: TRANSFERS -->
-      <div class="operation operation--transfer">
+      <!-- <div class="operation operation--transfer">
         <h2>Transfer money</h2>
         <form class="form form--transfer">
           <input type="text" class="form__input form__input--to" />
@@ -100,20 +118,20 @@ include_once "partials/header.php";
           <label class="form__label">Transfer to</label>
           <label class="form__label">Amount</label>
         </form>
-      </div>
+      </div> -->
 
       <!-- OPERATION: LOAN -->
-      <div class="operation operation--loan">
+      <!-- <div class="operation operation--loan">
         <h2>Request loan</h2>
         <form class="form form--loan">
           <input type="number" class="form__input form__input--loan-amount" />
           <button class="form__btn form__btn--loan">&rarr;</button>
           <label class="form__label form__label--loan">Amount</label>
         </form>
-      </div>
+      </div> -->
 
       <!-- OPERATION: CLOSE -->
-      <div class="operation operation--close">
+      <!-- <div class="operation operation--close">
         <h2>Close account</h2>
         <form class="form form--close">
           <input type="text" class="form__input form__input--user" />
@@ -126,7 +144,7 @@ include_once "partials/header.php";
           <label class="form__label">Confirm user</label>
           <label class="form__label">Confirm PIN</label>
         </form>
-      </div>
+      </div> -->
 
       <!-- LOGOUT TIMER -->
       <p class="logout-timer">

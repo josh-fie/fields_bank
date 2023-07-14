@@ -2,6 +2,16 @@
 
 $errors = []; //these errors will be looped through and displayed above the form fields on this page.
 
+// Check for $_GET error value - database connection error
+if($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+  $dbError = isset($_GET["databaseerror"]);
+
+  if($dbError) {
+    $errors[] = $_GET["databaseerror"];
+  };
+};
+
 // login logic to check $_POST values and validate
 // session_start();
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,38 +29,39 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if(empty($errors)) {
 
-      // echo '<pre>';
-      // var_dump($mysqli);
-      // echo '</pre>';
-
       $mysqli = require "../database.php";
 
-      // Check database for account
-      $sql = sprintf("SELECT * FROM customers WHERE username='%s'", $mysqli->real_escape_string($_POST['username']));
+      if(is_string($mysqli)) {
+        $errors[] = $mysqli;
+      } else {
 
-      $result = $mysqli->query($sql);
+        // Check database for account
+        $sql = sprintf("SELECT * FROM customers WHERE username='%s'", $mysqli->real_escape_string($_POST['username']));
 
-      $user = $result->fetch_assoc(); //returns result as an associative array and assigns to $user.
+        $result = $mysqli->query($sql);
 
-      // if user exists check the password
-      if($user) {
+        $user = $result->fetch_assoc(); //returns result as an associative array and assigns to $user.
 
-        var_dump($_POST);
+        // if user exists check the password
+        if($user) {
 
-        if($user['password'] === $_POST['password']) {
-          echo 'Login successful';
-          // If user exists:
-          session_start();
+          var_dump($_POST);
 
-          $_SESSION["customer_id"] = $user["id"];
-          $_SESSION["name"] = $user["name"];
+          if($user['password'] === $_POST['password']) {
+            echo 'Login successful';
+            // If user exists:
+            session_start();
 
-          // Redirect user to the dashboard once login completed.
-          header('Location: dashboard.php');
+            $_SESSION["customer_id"] = $user["id"];
+            $_SESSION["name"] = $user["name"];
 
-        } else {
-          // If user doesn't exist 
-        $errors[] = 'Login Invalid';
+            // Redirect user to the dashboard once login completed.
+            header('Location: dashboard.php');
+
+          } else {
+            // If user doesn't exist 
+          $errors[] = 'Login Invalid';
+          }
         }
       }
     };
@@ -69,12 +80,11 @@ include_once "partials/header.php";
     <header class="header">
       <nav class="nav">
         <img
-          src="img/logo.png"
-          alt="Bankist logo"
+          src="img/logo2.png"
+          alt="Field Bank logo"
           class="nav__logo"
           id="logo"
-          designer="Jonas"
-          data-version-number="3.0"
+          designer="Josh Fieldhouse"
         />
         <ul class="nav__links">
         <!-- Empty -->
@@ -83,7 +93,7 @@ include_once "partials/header.php";
     </header>
 
       <!-- LOGIN FORM -->
-    <div class="login">
+    <div class="operation operation--login">
       <h2 class="login__header">
         Login in
       </h2>
@@ -93,7 +103,7 @@ include_once "partials/header.php";
         <div class="alert alert-danger">
 
           <?php foreach ($errors as $error) { ?>
-            <div><?php echo $error ?></div>
+            <div class="message_banner error"><?php echo $error ?></div>
           <?php } ?>
         </div>
       <?php } ?>
@@ -121,7 +131,6 @@ include_once "partials/header.php";
         <button class="login__btn" type="submit">&rarr;</button>
       </form>
     </div>
-    <div class="overlay"></div>
 
 <?php
   include_once "partials/footer.php";

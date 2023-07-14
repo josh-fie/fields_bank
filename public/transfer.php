@@ -4,8 +4,6 @@
 session_start();
 // session name and id are persisted.
 
-var_dump($_SESSION);
-
 // imports form.php
 
 // will need a field to be submitted which will validate again the database checking for the other user.
@@ -13,6 +11,8 @@ var_dump($_SESSION);
 // validate.php? add elements to error array or completion array where message can be displayed. or put completion variable in the url query when redirecting back, then GET.
 
 $errors = []; //these errors will be looped through and displayed above the form fields on this page.
+
+$dest_amount = "";
 
 // login logic to check $_POST values and validate
 // session_start();
@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dest_amount = $_POST['dest_amount'];
 
     // Current Account Password for Validation
-    $password = $_POST['password'];
+    $user_password = $_POST['password'];
 
     if(!$dest_id) {
         $errors[] = 'Recipient Account ID not provided';
@@ -35,62 +35,102 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!$dest_amount) {
         $errors[] = 'Transfer Amount not provided';
       }
-    if(!$password) {
+    if(!$user_password) {
         $errors[] = 'Password not provided';
       }
 
+    // CurrentAccount ID
+    if($dest_id === $_SESSION['customer_id']) {
+      $errors[] = 'Must provide an external Recipient Account ID';
+    }
+
+    // RETRIEVE DESTINATION/RECIPIENT USER FROM DATABASE
     if(empty($errors)) {
 
       $mysqli = require "../database.php";
 
-      // Check database for recipient account - need multiple items in the query: id, name, movements
-      $dest_sql = sprintf("SELECT * FROM customers WHERE id='%s'", $mysqli->real_escape_string($_POST['dest_id']));
+      if(is_string($mysqli)) {
+        $errors[] = $mysqli;
+      } else {
 
-      $dest_result = $mysqli->query($dest_sql);
+        // Check database for recipient account - need multiple items in the query: id, name, movements
+        $dest_sql = sprintf("SELECT * FROM customers WHERE id='%s'", $mysqli->real_escape_string($_POST['dest_id']));
 
-      $dest_user = $dest_result->fetch_assoc(); //returns result as an associative array and assigns to $dest_user.
-    
-    // VALIDATE RECIPIENT
-    // Validate id provided
+        $dest_result = $mysqli->query($dest_sql);
 
-    //  that name is connected to id provided above
+        $dest_user = $dest_result->fetch_assoc(); //returns result as an associative array and assigns to $dest_user.
 
+        echo '<pre>';
+        var_dump( $dest_user);
+        echo '</pre>';
+      
+        // VALIDATE RECIPIENT
+        if($dest_user) {
 
-      // Check database for user account - need password for confirmation
-      $user_sql = sprintf("SELECT * FROM customers WHERE id='$_SESSION[id]'");
+          //  Validate that name is connected to id provided above
+          if($dest_user["name"] === $dest_name) {
+            echo 'Username on destination account matches name provided!';
+          } else {
+            $errors[] = 'Account Name and ID do not match';
+          }
 
-      $user_result = $mysqli->query($user_sql);
-
-      $user = $user_result->fetch_assoc(); //returns result as an associative array and assigns to $user.
-
-    // VALIDATE USER
-    // Validate that amount provided is a positive number 
-
-        if($dest_amount > 1) {
-            // Check that amount is available for transfer from user account
-                // Add up all movements to get summary total
-        } else {
+          // Validate that amount provided is a positive number 
+          if(!($dest_amount > 0)) {
             $errors[] = 'Transfer Amount must be positive';
-        };
-
-      //Check user password
-      if($password === $user['password']) {
-
-          // Redirect user to the dashboard once transfer completed.
-          header('Location: dashboard.php?completion=transfer+successful');
+          }
 
         } else {
-          // If password incorrect
-        $errors[] = 'Password Incorrect';
+          $errors[] = 'An error occurred. Please try again later.';
         }
+      }
 
-        // FINAL VALIDATION AND COMPLETION OF TRANSFER
-        if(empty($errors)) {
-            // INSERT the positive transfer amount into the recipient account movements
+    // RETRIEVE USER FROM DATABASE
+      if(empty($errors)) {
+        // Check database for user account - need password for confirmation
+        $user_sql = sprintf("SELECT * FROM customers WHERE id='%s'", $mysqli->real_escape_string($_SESSION['customer_id']));
 
+        $user_result = $mysqli->query($user_sql);
 
-            // INSERT negative movement into the user account movements.
+        $user = $user_result->fetch_assoc(); //returns result as an associative array and assigns to $user.
+
+        echo '<br>' .'<pre>';
+        var_dump($user);
+        echo '</pre>';
+      
+      // VALIDATE USER
+      if($user) {
+        //Check user password
+        if($user_password === $user["password"]) {
+          
+
+          // FINAL VALIDATION AND COMPLETION OF TRANSFER
+          echo $user["password"].'<br>'.'All credentials validated. Time to process Transfer'.'<br>';
+          
+          // Sum Movements
+          include_once "./functions/sumMovements.php";
+
+          $acc_balance = sumMovements($user["movements"]);
+
+          var_dump($acc_balance).'<br>';
+
+          // Check if Insufficient Funds
+
+          $transactionPoss = $dest_amount <= $acc_balance ? true : $errors[] = 'Insufficient Funds';
+
+          if($transactionPoss) {
+
+            include_once "./partials/transfer_transaction.php";
+
+          }
+
+        } else {
+            // If password incorrect
+          $errors[] = 'Password Incorrect';
         }
+      } else {
+        $errors[] = 'An error occurred. Please try again later.';
+      }
+    }
     };
 }
 
@@ -103,24 +143,29 @@ include_once "partials/header.php";
 
   </head>
   <body>
+
+  <?php var_dump($_SESSION) . '<br>'; ?>
     <header class="header">
       <nav class="nav">
         <img
-          src="img/logo.png"
-          alt="Bankist logo"
+          src="img/logo2.png"
+          alt="Field Bank logo"
           class="nav__logo"
           id="logo"
-          designer="Jonas"
-          data-version-number="3.0"
+          designer="Josh Fieldhouse"
         />
         <ul class="nav__links">
         <!-- Empty -->
         </ul>
+        <a class="nav__link" href="index.php">Logout</a>
       </nav>
     </header>
 
+    <!-- Return Button -->
+    <a href="dashboard.php" class="btn"><-- Back</a>
+
       <!-- LOGIN FORM -->
-    <div class="login">
+    <div class="operation operation--transfer">
       <h2 class="login__header">
         Transfer Money
       </h2>
@@ -130,7 +175,7 @@ include_once "partials/header.php";
         <div class="alert alert-danger">
 
           <?php foreach ($errors as $error) { ?>
-            <div><?php echo $error ?></div>
+            <div class="message_banner error"><?php echo $error ?></div>
           <?php } ?>
         </div>
       <?php } ?>
@@ -140,29 +185,27 @@ include_once "partials/header.php";
         <label for="dest_id">Recipient Account ID:</label>
         <input
           type="text"
-          placeholder="ID"
+          placeholder="Recipient ID"
           class="login__input login__input--user"
           id="dest_id"
           name="dest_id"
-          value="<?= htmlspecialchars($_POST['$dest_id'] ?? "") ?>" 
         />
         <label for="dest_name">Recipient Name:</label>
         <input
           type="text"
-          placeholder="name"
+          placeholder="Name"
           class="login__input login__input--user"
           id="dest_name"
           name="dest_name"
-          value="<?= htmlspecialchars($_POST['$dest_name'] ?? "") ?>" 
         />
         <label for="dest_amount">Transfer Amount:</label>
         <input
           type="text"
-          placeholder="Username"
+          placeholder="£"
           class="login__input login__input--user"
           id="dest_amount"
           name="dest_amount"
-          value="<?= htmlspecialchars($_POST['$dest_amount'] ?? "") ?>" 
+          value="<?= htmlspecialchars($dest_amount) ?? "" ?>" 
         />
         <label for="password">Password:</label>
         <input
@@ -176,7 +219,6 @@ include_once "partials/header.php";
         <button class="login__btn" type="submit">Confirm Transfer</button>
       </form>
     </div>
-    <div class="overlay"></div>
 
 <?php
   include_once "partials/footer.php";

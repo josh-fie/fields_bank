@@ -10,6 +10,10 @@ $id = $_SESSION['customer_id'];
 
 $mysqli = require "database.php";
 
+if(is_string($mysqli)) {
+    echo($mysqli);
+  } else {
+
     // Check database for account
     $sql = "SELECT * FROM customers WHERE id='$id'";
 
@@ -26,4 +30,5 @@ $mysqli = require "database.php";
 
     // Echo the JSON-encoded data
     echo $json_user;
+  }
 ?>

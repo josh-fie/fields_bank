@@ -11,4 +11,4 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <title>Fields Bank</title>
+    <title>Field Bank</title>

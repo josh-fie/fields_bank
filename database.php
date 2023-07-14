@@ -6,22 +6,19 @@ $dbname = "fields_bank";
 $username = "root";
 $password = "";
 
-$mysqli = new mysqli($host, $username, $password, $dbname);
+try {
 
-//if no error connecting this value will equal 0.
+    $mysqli = new mysqli($host, $username, $password, $dbname);
 
-if($mysqli->connect_errno) {
-    echo "Connection error:" . $mysqli->connect_error;
-}
+    if($mysqli->connect_errno) {
+        $error = "Connection error:" . $mysqli->connect_error;
+        header("Location: login.php?databaseerror=$error");
+    } else{
+        return $mysqli; 
+    }
 
-return $mysqli;
+} catch (mysqli_sql_exception $e) {
+    $mysqli = "Something went wrong. Please try again later.";
 
-// Establish Database Connection to Fields Bank DB
-// $pdo = new PDO('mysql:host=localhost;port=3306;dbname=fields_bank', 'root', '');
-
-
-//throw exception if no connection made
-// $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// return $pdo;
-//above allows importing files to see the $pdo variable. Or you can use dob block @var on each file and specify the type as instance of \PDO.
+    return $mysqli;
+};
