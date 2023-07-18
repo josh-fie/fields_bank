@@ -218,6 +218,21 @@ include_once "partials/header.php";
         />
         <button class="login__btn" type="submit">Confirm Transfer</button>
       </form>
+
+      <!-- MODAL TIMER -->
+      <div class="modal hidden">
+      <h2 class="modal__header">
+        Logout <br />
+        in just <span class="highlight">1 minute</span>
+      </h2>
+      <!-- LOGOUT TIMER -->
+      <p class="logout-timer">
+        You will be logged out in <span class="timer">05:00</span> due to inactivity.
+      </p>
+      <button class="btn--close-modal">I'm Still Here</button>
+      </div>
+      <div class="overlay hidden"></div>
+
     </div>
 
 <?php

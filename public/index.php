@@ -30,19 +30,18 @@ include_once "partials/header.php";
       </nav>
       <div class="showcase">
         <h1>
-          When
+          Experience
           <!-- Green highlight effect -->
-          <span class="highlight">banking</span>
-          meets<br />
-          <span class="highlight">minimalist</span>
+          <span class="highlight">Rural</span>
+          banking<br />
+          <!-- <span class="highlight">minimalist</span> -->
         </h1>
-        <h4>A simpler banking experience for a simpler life.</h4>
+        <h4>Community banking with a personal touch.</h4>
         <button class="btn--text btn--scroll-to">Learn more &DownArrow;</button>
-        <img
-          src="img/hero.png"
-          class="showcase__img"
-          alt="Minimalist bank items"
-        />
+        <div class="showcase__login">
+          <h2>Internet Banking</h2>
+          <a class="btn" href="login.php">Login</a>
+        </div>
       </div>
     </header>
 
@@ -67,11 +66,9 @@ include_once "partials/header.php";
               <use xlink:href="img/icons.svg#icon-monitor"></use>
             </svg>
           </div>
-          <h5 class="features__header">100% digital bank</h5>
+          <h5 class="features__header">100% online banking</h5>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde alias
-            sint quos? Accusantium a fugiat porro reiciendis saepe quibusdam
-            debitis ducimus.
+            Find all of our banking features available to any account holder through our 100% online platform accessible through any device. Simply login and have immediate access to your funds without any need to step out of your door.
           </p>
         </div>
 
@@ -83,9 +80,7 @@ include_once "partials/header.php";
           </div>
           <h5 class="features__header">Watch your money grow</h5>
           <p>
-            Nesciunt quos autem dolorum voluptates cum dolores dicta fuga
-            inventore ab? Nulla incidunt eius numquam sequi iste pariatur
-            quibusdam!
+            All regular current accounts provide a detailed overview of your account balance including outgoings, incomings and interest income as well as an easily navigable bank statement for viewing deposits and withdrawals quickly.
           </p>
         </div>
         <img
@@ -109,9 +104,7 @@ include_once "partials/header.php";
           </div>
           <h5 class="features__header">Free debit card included</h5>
           <p>
-            Quasi, fugit in cumque cupiditate reprehenderit debitis animi enim
-            eveniet consequatur odit quam quos possimus assumenda dicta fuga
-            inventore ab.
+            A free debit card will be posted out to you within 5 working days of opening an account with us. Competitive interest rates are offered on all accounts and reward options are available based on card usage.
           </p>
         </div>
       </div>
@@ -137,7 +130,7 @@ include_once "partials/header.php";
             <span>02</span>Instant Loans
           </button>
           <button class="btn operations__tab operations__tab--3" data-tab="3">
-            <span>03</span>Instant Closing
+            <span>03</span>Instant Customer Service
           </button>
         </div>
         <div
@@ -149,13 +142,10 @@ include_once "partials/header.php";
             </svg>
           </div>
           <h5 class="operations__header">
-            Tranfser money to anyone, instantly! No fees, no BS.
+            Transfer money instantly to anyone!
           </h5>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            All bank transfers are validated and completed within seconds providing you ultimate flexibility and fluidity with your money. No fees are charged on any outgoing or incoming transfers.
           </p>
         </div>
 
@@ -166,29 +156,23 @@ include_once "partials/header.php";
             </svg>
           </div>
           <h5 class="operations__header">
-            Buy a home or make your dreams come true, with instant loans.
+            Immediate loans provided to get projects kickstarted!
           </h5>
           <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Easy to understand terms and conditions are provided prior to any loan request. All loan requests do not affect your credit rating and there is no limit on the number of requests. No loan request maximum given that you have the funds to repay over a payment period.
           </p>
         </div>
         <div class="operations__content operations__content--3">
           <div class="operations__icon operations__icon--3">
             <svg>
-              <use xlink:href="img/icons.svg#icon-user-x"></use>
+              <use xlink:href="img/icons.svg#icon-user"></use>
             </svg>
           </div>
           <h5 class="operations__header">
-            No longer need your account? No problem! Close it instantly.
+            Any questions about your account? Contact us now!
           </h5>
           <p>
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id est laborum. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.
+            Field Bank operates 24 hour customer service over telephone, text or web chat. This way you can reach us any time of the day to discuss your account and not have to delay important decisions.
           </p>
         </div>
       </div>
@@ -198,45 +182,20 @@ include_once "partials/header.php";
       <div class="section__title section__title--testimonials">
         <h2 class="section__description">Not sure yet?</h2>
         <h3 class="section__header">
-          Millions of Bankists are already making their lifes simpler.
+          Millions are already onboard
         </h3>
       </div>
 
       <div class="slider">
         <div class="slide">
           <div class="testimonial">
-            <h5 class="testimonial__header">Best financial decision ever!</h5>
+            <h5 class="testimonial__header">Fantastic Customer Service!</h5>
             <blockquote class="testimonial__text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Accusantium quas quisquam non? Quas voluptate nulla minima
-              deleniti optio ullam nesciunt, numquam corporis et asperiores
-              laboriosam sunt, praesentium suscipit blanditiis. Necessitatibus
-              id alias reiciendis, perferendis facere pariatur dolore veniam
-              autem esse non voluptatem saepe provident nihil molestiae.
+              I needed help with requesting a loan and so contacted Field Bank customer service by text and received a response within 30 seconds. They advised me where to find the terms and conditions for the request and walked me through the process. It made the job seamless and saved me lots of time which otherwise would have been wasted at other banks waiting on hold to speak to someone.
             </blockquote>
             <address class="testimonial__author">
               <img src="img/user-1.jpg" alt="" class="testimonial__photo" />
-              <h6 class="testimonial__name">Aarav Lynn</h6>
-              <p class="testimonial__location">San Francisco, USA</p>
-            </address>
-          </div>
-        </div>
-
-        <div class="slide">
-          <div class="testimonial">
-            <h5 class="testimonial__header">
-              The last step to becoming a complete minimalist
-            </h5>
-            <blockquote class="testimonial__text">
-              Quisquam itaque deserunt ullam, quia ea repellendus provident,
-              ducimus neque ipsam modi voluptatibus doloremque, corrupti
-              laborum. Incidunt numquam perferendis veritatis neque repellendus.
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illo
-              deserunt exercitationem deleniti.
-            </blockquote>
-            <address class="testimonial__author">
-              <img src="img/user-2.jpg" alt="" class="testimonial__photo" />
-              <h6 class="testimonial__name">Miyah Miles</h6>
+              <h6 class="testimonial__name">John Brown</h6>
               <p class="testimonial__location">London, UK</p>
             </address>
           </div>
@@ -245,20 +204,31 @@ include_once "partials/header.php";
         <div class="slide">
           <div class="testimonial">
             <h5 class="testimonial__header">
-              Finally free from old-school banks
+              A bank for the community
             </h5>
             <blockquote class="testimonial__text">
-              Debitis, nihil sit minus suscipit magni aperiam vel tenetur
-              incidunt commodi architecto numquam omnis nulla autem,
-              necessitatibus blanditiis modi similique quidem. Odio aliquam
-              culpa dicta beatae quod maiores ipsa minus consequatur error sunt,
-              deleniti saepe aliquid quos inventore sequi. Necessitatibus id
-              alias reiciendis, perferendis facere.
+              I was reluctant at first to consider Field Bank given that they were new to the banking scene. However, they have risen well above my expectations. In the time that I have been banking with Field Bank I have not faced any issues and communication has been prompt and catered to my needs. I really feel a part of the Field Bank community.
+            </blockquote>
+            <address class="testimonial__author">
+              <img src="img/user-2.jpg" alt="" class="testimonial__photo" />
+              <h6 class="testimonial__name">Julia Wood</h6>
+              <p class="testimonial__location">Peterborough, UK</p>
+            </address>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="testimonial">
+            <h5 class="testimonial__header">
+              Easy to understand and operate
+            </h5>
+            <blockquote class="testimonial__text">
+              The website is very simple to navigate and has the core functionality that I need for my personal banking. My account is updated instantly after any action I take on my account so that subsequent actions can be taken without waiting for lengthy approvals. I would recommend them to anyone who wanted to simplify their banking!
             </blockquote>
             <address class="testimonial__author">
               <img src="img/user-3.jpg" alt="" class="testimonial__photo" />
-              <h6 class="testimonial__name">Francisco Gomes</h6>
-              <p class="testimonial__location">Lisbon, Portugal</p>
+              <h6 class="testimonial__name">Mohammed Iqbal</h6>
+              <p class="testimonial__location">Liverpool, UK</p>
             </address>
           </div>
         </div>
@@ -269,14 +239,18 @@ include_once "partials/header.php";
       </div>
     </section>
 
-    <section class="section section--sign-up">
+    <section class="section section--contact">
       <div class="section__title">
         <h3 class="section__header">
-          The best day to join Bankist was one year ago. The second best is
-          today!
+          Contact us anytime 24/7
         </h3>
       </div>
-      <button class="btn btn--show-modal">Open your free account today!</button>
+      <div class="section__contact--type">
+        <ul>
+          <li>Telephone: 0111 555 5678</li>
+          <li>Text "QUERY" to 00000</li>
+          <li>Login to Access Webchat (Currently Unavailable)</li>
+        </ul>
     </section>
 
 <?php

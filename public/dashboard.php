@@ -70,6 +70,21 @@ include_once "partials/header.php";
       <?php } else if ($completion && $completion === "Loan Request Unsuccessful") { ?>
       <div class="message_banner error"><h2><?php echo $completion ?></h2></div>
       <?php } ?>
+
+      <!-- MODAL TIMER -->
+      <div class="modal hidden">
+      <h2 class="modal__header">
+        Logout <br />
+        in just <span class="highlight">1 minute</span>
+      </h2>
+      <!-- LOGOUT TIMER -->
+      <p class="logout-timer">
+        You will be logged out in <span class="timer">05:00</span>
+      </p>
+      <button class="btn--close-modal">I'm Still Here</button>
+      </div>
+      <div class="overlay hidden"></div>
+      
       <!-- BALANCE -->
       <div class="balance">
         <div>
@@ -108,48 +123,6 @@ include_once "partials/header.php";
         </div>
       </div>
 
-      <!-- OPERATION: TRANSFERS -->
-      <!-- <div class="operation operation--transfer">
-        <h2>Transfer money</h2>
-        <form class="form form--transfer">
-          <input type="text" class="form__input form__input--to" />
-          <input type="number" class="form__input form__input--amount" />
-          <button class="form__btn form__btn--transfer">&rarr;</button>
-          <label class="form__label">Transfer to</label>
-          <label class="form__label">Amount</label>
-        </form>
-      </div> -->
-
-      <!-- OPERATION: LOAN -->
-      <!-- <div class="operation operation--loan">
-        <h2>Request loan</h2>
-        <form class="form form--loan">
-          <input type="number" class="form__input form__input--loan-amount" />
-          <button class="form__btn form__btn--loan">&rarr;</button>
-          <label class="form__label form__label--loan">Amount</label>
-        </form>
-      </div> -->
-
-      <!-- OPERATION: CLOSE -->
-      <!-- <div class="operation operation--close">
-        <h2>Close account</h2>
-        <form class="form form--close">
-          <input type="text" class="form__input form__input--user" />
-          <input
-            type="password"
-            maxlength="6"
-            class="form__input form__input--pin"
-          />
-          <button class="form__btn form__btn--close">&rarr;</button>
-          <label class="form__label">Confirm user</label>
-          <label class="form__label">Confirm PIN</label>
-        </form>
-      </div> -->
-
-      <!-- LOGOUT TIMER -->
-      <p class="logout-timer">
-        You will be logged out in <span class="timer">05:00</span>
-      </p>
     </main>
 
 <?php

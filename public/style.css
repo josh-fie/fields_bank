@@ -66,9 +66,9 @@ body {
   font-weight: 500;
 }
 
-.btn {
+.btn, .btn--close-modal {
   display: inline-block;
-  /* background-color: var(--color-primary); */
+  background-color: var(--color-primary);
   font-size: 1.6rem;
   font-family: inherit;
   font-weight: 500;
@@ -81,8 +81,17 @@ body {
   /* transition: all 0.3s; */
 }
 
-.btn:hover {
+.btn--close-modal {
+  color: black;
+  margin-top: 16px;
+}
+
+/* .btn:hover {
   background-color: var(--color-gray);
+} */
+
+.btn:hover, .btn--close-modal:hover {
+  background-color: var(--color-primary-darker);
 }
 
 .btn--text {
@@ -180,7 +189,7 @@ img {
 /* HEADER */
 .header {
   /* padding: 0 3rem; */
-  /* height: 100vh; */
+  height: 100vh;
   /* display: flex;
   flex-direction: column;
   align-items: center; */
@@ -201,12 +210,15 @@ img {
 } */
 
 .showcase {
+  color: rgb(32 32 32);
+  background-image: url("img/hero2.jpg");
+  background-size: cover;
   /* max-width: 115rem; */
   display: grid;
   grid-template-columns: 3fr 2fr;
   row-gap: 3rem;
   padding: 15rem 3rem;
-  height: 90%;
+  height: calc(100% - 90px);
 }
 
 h1 {
@@ -219,11 +231,19 @@ h4 {
   font-weight: 500;
 }
 
-.showcase__img {
-  width: 100%;
+.showcase__login {
+  width: 80%;
+  height: 80%;
+  background-color: var(--color-gray);
   grid-column: 2 / 3;
   grid-row: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   transform: translateY(-6rem);
+  margin: auto;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
 }
 
 .highlight {
@@ -318,12 +338,12 @@ h4 {
 }
 
 .operations__tab--3 {
-  background-color: var(--color-tertiary);
+  background-color: lightblue;
   margin: 0;
 }
 
 .operations__tab--3:hover {
-  background-color: var(--color-tertiary-darker);
+  background-color: turquoise;
 }
 
 .operations__tab--active {
@@ -385,7 +405,7 @@ h4 {
   fill: var(--color-primary);
 }
 .operations__icon--3 svg {
-  fill: var(--color-tertiary);
+  fill: lightblue;
 }
 
 /* SLIDER */
@@ -540,7 +560,7 @@ h4 {
 }
 
 /* SIGNUP */
-.section--sign-up {
+.section--contact {
   background-color: #37383d;
   border-top: none;
   border-bottom: 1px solid #444;
@@ -548,18 +568,29 @@ h4 {
   padding: 10rem 3rem;
 }
 
-.section--sign-up .section__header {
+.section--contact .section__header {
   color: #fff;
   text-align: center;
 }
 
-.section--sign-up .section__title {
+.section--contact .section__title {
   margin-bottom: 6rem;
 }
 
-.section--sign-up .btn {
+/* .section--contact .btn {
   font-size: 1.9rem;
   padding: 2rem 5rem;
+} */
+
+.section__contact--type {
+  font-size: 1.9rem;
+  padding: 2rem 5rem;
+  color: white;
+  text-decoration: none;
+}
+
+.section__contact--type ul {
+  list-style-type: none;
 }
 
 /* FOOTER */
@@ -590,6 +621,7 @@ h4 {
   display: block;
   margin: 0 auto;
   margin-bottom: 5rem;
+  filter: invert();
 }
 
 .footer__copyright {
@@ -602,8 +634,8 @@ h4 {
   font-size: 1.4rem;
 }
 
-/* Login Page */
-/* .login {
+/* MODAL TIMER */
+.modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -614,6 +646,18 @@ h4 {
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
   z-index: 1000;
   transition: all 0.5s;
+}
+
+/* .btn--close-modal {
+  font-family: inherit;
+  color: inherit;
+  /* position: absolute; */
+  /* top: 0.5rem;
+  right: 2rem;
+  font-size: 4rem;
+  cursor: pointer;
+  border: none;
+  background: none;
 } */
 
 .overlay {
@@ -622,11 +666,13 @@ h4 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.45);
   /* backdrop-filter: blur(4px); */
   z-index: 100;
-  /* transition: all 0.5s; */
+  transition: all 0.5s;
 }
+
+/* Login Page */
 
 .login__header {
   font-size: 3.25rem;
@@ -665,18 +711,6 @@ h4 {
   background-color: lightgreen;
   
 }
-
-/* .btn--close-modal {
-  font-family: inherit;
-  color: inherit;
-  position: absolute;
-  top: 0.5rem;
-  right: 2rem;
-  font-size: 4rem;
-  cursor: pointer;
-  border: none;
-  background: none;
-} */
 
 .hidden {
   visibility: hidden;

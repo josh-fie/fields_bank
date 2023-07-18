@@ -208,8 +208,24 @@ include_once "partials/header.php";
         />
         <label for="check_confirm">Agree Terms and Conditions</label>
         <input type="checkbox" name="check_confirm" id="check_confirm"/>
+        <a class="btn" href="Field Bank Loan T&C's.pdf" target="_blank">Open T&C's as PDF</a>
         <button class="login__btn" type="submit">Confirm Loan Request</button>
       </form>
+
+      <!-- MODAL TIMER -->
+      <div class="modal hidden">
+      <h2 class="modal__header">
+        Logout <br />
+        in just <span class="highlight">1 minute</span>
+      </h2>
+      <!-- LOGOUT TIMER -->
+      <p class="logout-timer">
+        You will be logged out in <span class="timer">05:00</span>
+      </p>
+      <button class="btn--close-modal">I'm Still Here</button>
+      </div>
+      <div class="overlay hidden"></div>
+
     </div>
 
 <?php

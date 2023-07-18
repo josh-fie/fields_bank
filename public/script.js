@@ -2,10 +2,6 @@
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-const modal = document.querySelector('.modal');
-const overlay = document.querySelector('.overlay');
-// const btnCloseModal = document.querySelector('.btn--close-modal');
-// const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const nav = document.querySelector('.nav');
 
@@ -17,7 +13,7 @@ const tabsContent = document.querySelectorAll('.operations__content');
 
 //Button Scrolling
 
-btnScrollTo.addEventListener('click', function (e) {
+btnScrollTo ? btnScrollTo.addEventListener('click', function (e) {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
 
@@ -48,7 +44,7 @@ btnScrollTo.addEventListener('click', function (e) {
   //Modern version just needs .scrollIntoView
 
   section1.scrollIntoView({ behavior: 'smooth' });
-});
+}) : null;
 
 //Page Navigation
 
@@ -81,7 +77,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 // tabs.forEach(t => t.addEventListener('click', () => console.log('TAB'))) could do this to have a function for each tab but this would mean the callback function for every tab and would be better handled with event delegation.
 
-tabsContainer.addEventListener('click', function (e) {
+tabsContainer ? tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
 
   if (!clicked) return; //Guard Clause which immediately ends the function.
@@ -97,7 +93,7 @@ tabsContainer.addEventListener('click', function (e) {
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`) //accesses data-tab number using dataset.tab(CamelCase but only one word)
     .classList.add('operations__content--active');
-});
+}) : null;
 
 // Menu fade animation
 const handleHover = function (e) {
@@ -248,9 +244,9 @@ const slider = function () {
       .querySelectorAll('.dots__dot')
       .forEach(dot => dot.classList.remove('dots__dot--active'));
 
-    document
-      .querySelector(`.dots__dot[data-slide="${slide}"]`) //finds the dot with dots dot class and dataslide # attribute using bracket notation.
-      .classList.add('dots__dot--active');
+    document.querySelector('dots_dot[data-slide="0"]') ? document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active') : null;
   };
 
   const goToSlide = function (slide) {
@@ -291,8 +287,8 @@ const slider = function () {
 
   //Event Listeners
 
-  btnRight.addEventListener('click', nextSlide);
-  btnLeft.addEventListener('click', prevSlide);
+  btnRight ? btnRight.addEventListener('click', nextSlide) : null;
+  btnLeft ? btnLeft.addEventListener('click', prevSlide) : null;
 
   document.addEventListener('keydown', function (e) {
     console.log(e);
@@ -300,15 +296,15 @@ const slider = function () {
     e.key === 'ArrowRight' && nextSlide(); //short circuting applied here
   });
 
-  dotContainer.addEventListener('click', function (e) {
+  dotContainer ? dotContainer.addEventListener('click', function (e) {
     if (e.target.classList.contains('dots__dot')) {
       const { slide } = e.target.dataset; //deconstruct object into slide variable.
       goToSlide(slide);
       activateDot(slide);
     }
-  });
+  }) : null;
 };
-slider();
+tabs ? slider() : null;
 //How the DOM Works Behind the Scenes
 
 //The DOM is the interface between Javascript and the browser and can be manipulated by Javascript to create, modify, and delete HTML elements, and set styles, classes and attributes and respond to events.
@@ -563,11 +559,11 @@ window.addEventListener('load', function (e) {
 //The load event fires once all of the html, js, css and images are loaded, so basically once the whole page has completed loading.
 
 //Before Unload
-window.addEventListener('beforeunload', function (e) {
-  e.preventDefault(); //needed for some browsers to access
-  console.log(e);
-  e.returnValue = ''; //the default message cannot be changed anymore due to abuse.
-});
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault(); //needed for some browsers to access
+//   console.log(e);
+//   e.returnValue = ''; //the default message cannot be changed anymore due to abuse.
+// });
 
 //The before unload event only fires just before the user leaves a page. eg. once x is clicked to close a tab.
 //Should only use this event when user is leaving a form half filled and data could be lost etc.
