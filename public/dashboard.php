@@ -14,14 +14,12 @@ include_once "partials/header.php";
 
   <?php 
   
-  var_dump($_SESSION);
-  
   $completion = null;
 
   if($_GET) {
-    var_dump($_GET);
+    // var_dump($_GET);
     $completion = $_GET["completion"];
-    echo '<br>'.$completion;
+    // echo '<br>'.$completion;
   }
 
   ?>
@@ -73,10 +71,8 @@ include_once "partials/header.php";
 
       <!-- MODAL TIMER -->
       <div class="modal hidden">
-      <h2 class="modal__header">
-        Logout <br />
-        in just <span class="highlight">1 minute</span>
-      </h2>
+      <h2 class="modal__header">Logout</h2>
+      <span>in just 1 minute</span>
       <!-- LOGOUT TIMER -->
       <p class="logout-timer">
         You will be logged out in <span class="timer">05:00</span>
@@ -98,12 +94,18 @@ include_once "partials/header.php";
 
       <!-- SUMMARY -->
       <div class="summary">
-        <p class="summary__label">In</p>
-        <p class="summary__value summary__value--in">0000€</p>
-        <p class="summary__label">Out</p>
-        <p class="summary__value summary__value--out">0000€</p>
-        <p class="summary__label">Interest</p>
-        <p class="summary__value summary__value--interest">0000€</p>
+        <div>
+          <p class="summary__label">In</p>
+          <p class="summary__value summary__value--in">0000€</p>
+        </div>
+        <div>
+          <p class="summary__label">Out</p>
+          <p class="summary__value summary__value--out">0000€</p>
+        </div>
+        <div>
+          <p class="summary__label">Interest</p>
+          <p class="summary__value summary__value--interest">0000€</p>
+        </div>
         <button class="btn--sort">&downarrow; SORT</button>
       </div>
 
@@ -124,6 +126,20 @@ include_once "partials/header.php";
       </div>
 
     </main>
+
+    <section class="section section--contact" id="section--contact">
+      <div class="section__title">
+        <h3 class="section__header">
+          Contact us anytime 24/7
+        </h3>
+      </div>
+      <div class="section__contact--type">
+        <ul>
+          <li>Telephone: 0111 555 5678</li>
+          <li>Text "QUERY" to 00000</li>
+          <li>Access Webchat (Currently Unavailable)</li>
+        </ul>
+      </section>
 
 <?php
 include_once "partials/footer.php";

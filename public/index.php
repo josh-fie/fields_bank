@@ -124,13 +124,16 @@ include_once "partials/header.php";
             class="btn operations__tab operations__tab--1 operations__tab--active"
             data-tab="1"
           >
-            <span>01</span>Instant Transfers
+            <span>01</span>
+            <span>Instant Transfers</span>
           </button>
           <button class="btn operations__tab operations__tab--2" data-tab="2">
-            <span>02</span>Instant Loans
+            <span>02</span>
+            <span>Instant Loans</span>
           </button>
           <button class="btn operations__tab operations__tab--3" data-tab="3">
-            <span>03</span>Instant Customer Service
+            <span>03</span>
+            <span>Instant Customer Service</span>
           </button>
         </div>
         <div
@@ -239,7 +242,7 @@ include_once "partials/header.php";
       </div>
     </section>
 
-    <section class="section section--contact">
+    <section class="section section--contact" id="section--contact">
       <div class="section__title">
         <h3 class="section__header">
           Contact us anytime 24/7
@@ -249,7 +252,7 @@ include_once "partials/header.php";
         <ul>
           <li>Telephone: 0111 555 5678</li>
           <li>Text "QUERY" to 00000</li>
-          <li>Login to Access Webchat (Currently Unavailable)</li>
+          <li>Access Webchat (Currently Unavailable)</li>
         </ul>
     </section>
 

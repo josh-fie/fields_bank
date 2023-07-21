@@ -62,7 +62,9 @@ btnScrollTo ? btnScrollTo.addEventListener('click', function (e) {
 //1. add the eventlistener to a common parent element of all the elements we are interested in
 //2. Determine what element originated the event
 
-document.querySelector('.nav__links').addEventListener('click', function (e) {
+const navLinks = document.querySelector('.nav__links');
+
+navLinks ? navLinks.addEventListener('click', function (e) {
   e.preventDefault();
 
   //Matching strategy
@@ -71,7 +73,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     console.log(id);
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
-});
+}) : null;
 
 //Tabbed component
 
@@ -100,12 +102,10 @@ const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-    const logo = link.closest('.nav').querySelector('img');
 
     siblings.forEach(el => {
       if (el !== link) el.style.opacity = this;
     });
-    logo.style.opacity = this;
   }
 };
 
@@ -164,7 +164,7 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   threshold: 0,
   rootMargin: `-${navHeight}px`, //margin outside of the element where function is applied. Can be hard coded as a px but better to be dynamic with bounding client rect.
 });
-headerObserver.observe(header);
+if((document.querySelector('header')).classList.contains('header')){headerObserver.observe(header);}
 
 //Reveal sections on Scroll
 const allSections = document.querySelectorAll('.section');
@@ -305,6 +305,37 @@ const slider = function () {
   }) : null;
 };
 tabs ? slider() : null;
+
+// Resize Nav Logo
+// Get a reference to your image element
+const imageLogo = document.querySelector('.nav__logo');
+const operationsButtons = document.querySelectorAll('.btn.operations__tab');
+
+// Function to update the image source based on window width
+function updateElements375() {
+
+  if (window.innerWidth <= 375) {
+    imageLogo.src = './img/logo_small.png';
+
+    operationsButtons.forEach(btn => {
+      btn.children[1].classList.contains('hiddenTab') ? null : btn.children[1].classList.toggle('hiddenTab');
+      });
+
+  } else {
+    imageLogo.src = './img/logo2.png';
+
+    operationsButtons.forEach(btn => {
+      btn.children[1].classList.contains('hiddenTab') ? btn.children[1].classList.toggle('hiddenTab') : null;
+      });
+  }
+}
+
+// Initial update when the page loads
+updateElements375();
+
+// Update the image source on window resize
+window.addEventListener('resize', updateElements375);
+
 //How the DOM Works Behind the Scenes
 
 //The DOM is the interface between Javascript and the browser and can be manipulated by Javascript to create, modify, and delete HTML elements, and set styles, classes and attributes and respond to events.

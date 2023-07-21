@@ -37,10 +37,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please agree Terms and Conditions';
     }
 
-    // Validate that amount provided is a positive number 
-    if(!($loan_amount > 0)) {
-      $errors[] = 'Transfer Amount must be positive';
-    };
+    // Validate Amount
+    include_once "./partials/validateAmount.php";
+    [$loan_amount, $errors] = validateAmount($loan_amount, $errors);
 
     if(empty($errors)) {
 
@@ -150,8 +149,7 @@ include_once "partials/header.php";
   </head>
   <body>
 
-  <?php var_dump($_SESSION); ?>
-    <header class="header">
+    <header>
       <nav class="nav">
         <img
           src="img/logo2.png"
@@ -160,15 +158,14 @@ include_once "partials/header.php";
           id="logo"
           designer="Josh Fieldhouse"
         />
-        <ul class="nav__links">
-        <!-- Empty -->
-        </ul>
+        <!-- <ul class="nav__links">
+        </ul> -->
         <a class="nav__link" href="index.php">Logout</a>
       </nav>
     </header>
 
     <!-- Return Button -->
-    <a href="dashboard.php" class="btn"><-- Back</a>
+    <a href="dashboard.php" class="btn--back"><-- Back</a>
 
       <!-- LOAN FORM -->
     <div class="operation operation--loan">
@@ -191,6 +188,8 @@ include_once "partials/header.php";
         <label for="loan_amount">Loan Amount:</label>
         <input
           type="text"
+          title="(e.g. 1,000.00)"
+          pattern="^\d{1,3}(,\d{3})*(\.\d{2})?$"
           placeholder="£"
           class="login__input login__input--user"
           id="loan_amount"
@@ -208,15 +207,16 @@ include_once "partials/header.php";
         />
         <label for="check_confirm">Agree Terms and Conditions</label>
         <input type="checkbox" name="check_confirm" id="check_confirm"/>
-        <a class="btn" href="Field Bank Loan T&C's.pdf" target="_blank">Open T&C's as PDF</a>
+        <a class="btn pdf" href="Field Bank Loan T&C's.pdf" target="_blank">Open T&C's as PDF</a>
         <button class="login__btn" type="submit">Confirm Loan Request</button>
       </form>
 
       <!-- MODAL TIMER -->
       <div class="modal hidden">
       <h2 class="modal__header">
-        Logout <br />
-        in just <span class="highlight">1 minute</span>
+        <span>Logout </span>
+        <br />
+        <span>in just 1 minute</span>
       </h2>
       <!-- LOGOUT TIMER -->
       <p class="logout-timer">
@@ -227,6 +227,20 @@ include_once "partials/header.php";
       <div class="overlay hidden"></div>
 
     </div>
+
+    <section class="section section--contact" id="section--contact">
+      <div class="section__title">
+        <h3 class="section__header">
+          Contact us anytime 24/7
+        </h3>
+      </div>
+      <div class="section__contact--type">
+        <ul>
+          <li>Telephone: 0111 555 5678</li>
+          <li>Text "QUERY" to 00000</li>
+          <li>Access Webchat (Currently Unavailable)</li>
+        </ul>
+    </section>
 
 <?php
   include_once "partials/footer.php";

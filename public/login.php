@@ -62,6 +62,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             // If user doesn't exist 
           $errors[] = 'Login Invalid';
           }
+        } else {
+          // If user doesn't exist 
+        $errors[] = 'Login Invalid';
         }
       }
     };
@@ -77,7 +80,7 @@ include_once "partials/header.php";
 
   </head>
   <body>
-    <header class="header">
+    <header>
       <nav class="nav">
         <img
           src="img/logo2.png"
@@ -86,9 +89,8 @@ include_once "partials/header.php";
           id="logo"
           designer="Josh Fieldhouse"
         />
-        <ul class="nav__links">
-        <!-- Empty -->
-        </ul>
+        <!-- <ul class="nav__links">
+        </ul> -->
       </nav>
     </header>
 
@@ -128,9 +130,23 @@ include_once "partials/header.php";
           id="password"
           name="password"
         />
-        <button class="login__btn" type="submit">&rarr;</button>
+        <button class="login__btn" type="submit">Login</button>
       </form>
     </div>
+
+    <section class="section section--contact" id="section--contact">
+      <div class="section__title">
+        <h3 class="section__header">
+          Contact us anytime 24/7
+        </h3>
+      </div>
+      <div class="section__contact--type">
+        <ul>
+          <li>Telephone: 0111 555 5678</li>
+          <li>Text "QUERY" to 00000</li>
+          <li>Access Webchat (Currently Unavailable)</li>
+        </ul>
+    </section>
 
 <?php
   include_once "partials/footer.php";

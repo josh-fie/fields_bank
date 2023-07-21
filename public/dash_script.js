@@ -5,6 +5,8 @@
 
 /////////////////////////////////////////////////
 // Elements
+const nav = document.querySelector('.nav');
+
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -376,3 +378,39 @@ btnSort ? btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 }) : null;
+
+// Resize Nav Logo
+// Get a reference to your image element
+const imageLogo = document.querySelector('.nav__logo');
+
+// Function to update the image source based on window width
+function updateImageSource() {
+  if (window.innerWidth <= 375) {
+    imageLogo.src = './img/logo_small.png';
+  } else {
+    imageLogo.src = './img/logo2.png';
+  }
+}
+
+// Initial update when the page loads
+updateImageSource();
+
+// Update the image source on window resize
+window.addEventListener('resize', updateImageSource);
+
+// Menu fade animation
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+  }
+};
+
+//Passing "argument" into handler. Event functions cannot have arguments other than the e (event) so you can use the this keyword to introduce new "arguments". The below using the bind method to initially bind the opacity as this
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+nav.addEventListener('mouseout', handleHover.bind(1)); //mouseout is the opposite of mouseover
