@@ -86,7 +86,7 @@ try {
     $mysqli->close();
 
     // Redirect user to the dashboard once transfer completed. Completion message included in redirection to display.
-    header('Location: dashboard.php?completion=Transfer+Successful');
+    header('Location: index.php?completion=Transfer+Successful&page=dashboard');
 
 } catch (Exception $e) {
 

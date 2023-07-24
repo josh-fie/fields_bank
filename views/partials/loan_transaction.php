@@ -4,14 +4,10 @@
 
 // USER CONCATENATION
     // Concatenate movementDate onto movementsDates string
-    // echo $user["movementsDates"].'<br>'. $isoString . '<br>';
     $newMovementDates = $loan_user["movementsDates"].', '.$isoString;
-    echo $newMovementDates.'<br>';
 
     // Concatenate -movement onto movements string
-    // echo $user["movements"].'<br>'. $dest_amount . '<br>';
     $newMovements = $loan_user["movements"].', '.$loan_amount;
-    echo $newMovements.'<br>';
 
 try {
 
@@ -40,8 +36,7 @@ try {
     $mysqli->close();
 
     // Redirect user to the dashboard once transfer completed. Completion message included in redirection to display.
-    header('Location: dashboard.php?completion=Loan+Request+Successful');
-
+    header('Location: index.php?completion=Loan+Request+Successful&page=dashboard');
 } catch (Exception $e) {
 
     $errors[] = "Transaction Failed:" . $e->getMessage();

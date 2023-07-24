@@ -45,10 +45,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         // if user exists check the password
         if($user) {
 
-          var_dump($_POST);
+          // var_dump($_POST);
 
           if($user['password'] === $_POST['password']) {
-            echo 'Login successful';
+            // echo 'Login successful';
             // If user exists:
             session_start();
 
@@ -56,7 +56,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION["name"] = $user["name"];
 
             // Redirect user to the dashboard once login completed.
-            header('Location: dashboard.php');
+            header("Location: ../public/index.php?page=dashboard");
 
           } else {
             // If user doesn't exist 
@@ -72,9 +72,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<?php
-include_once "partials/header.php";
-?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  <?php include_once "partials/header.php"; ?>
   
   <script defer src="script.js"></script>
 

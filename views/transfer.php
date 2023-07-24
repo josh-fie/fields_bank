@@ -4,18 +4,13 @@
 session_start();
 // session name and id are persisted.
 
-// imports form.php
-
-// will need a field to be submitted which will validate again the database checking for the other user.
-
-// validate.php? add elements to error array or completion array where message can be displayed. or put completion variable in the url query when redirecting back, then GET.
 
 $errors = []; //these errors will be looped through and displayed above the form fields on this page.
 
 $dest_amount = "";
 
 // login logic to check $_POST values and validate
-// session_start();
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Destination Account Details
@@ -45,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validate Amount
-    include_once "./partials/validateAmount.php";
+    include_once "functions/validateAmount.php";
     [$dest_amount, $errors] = validateAmount($dest_amount, $errors);
 
     // RETRIEVE DESTINATION/RECIPIENT USER FROM DATABASE
@@ -111,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
           echo $user["password"].'<br>'.'All credentials validated. Time to process Transfer'.'<br>';
           
           // Sum Movements
-          include_once "./functions/sumMovements.php";
+          include_once "functions/sumMovements.php";
 
           $acc_balance = sumMovements($user["movements"]);
 
@@ -123,7 +118,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           if($transactionPoss) {
 
-            include_once "./partials/transfer_transaction.php";
+            include_once "partials/transfer_transaction.php";
 
           }
 
@@ -139,9 +134,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<?php
-include_once "partials/header.php";
-?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  <?php include_once "partials/header.php"; ?>
   
   <script defer src="dash_script.js"></script>
 
@@ -158,12 +155,12 @@ include_once "partials/header.php";
         />
         <!-- <ul class="nav__links">
         </ul> -->
-        <a class="nav__link" href="index.php">Logout</a>
+        <a class="nav__link" href="index.php?page=logout">Logout</a>
       </nav>
     </header>
 
     <!-- Return Button -->
-    <a href="dashboard.php" class="btn--back"><-- Back</a>
+    <a href="index.php?page=dashboard" class="btn--back"><-- Back</a>
 
       <!-- LOGIN FORM -->
     <div class="operation operation--transfer">

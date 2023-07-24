@@ -3,10 +3,13 @@
 // Session maintained
 session_start();
 // session name and id are persisted.
-
-include_once "partials/header.php";
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  <?php include_once "partials/header.php"; ?>
   <script defer src="dash_script.js"></script>
 
   </head>
@@ -17,9 +20,9 @@ include_once "partials/header.php";
   $completion = null;
 
   if($_GET) {
-    // var_dump($_GET);
-    $completion = $_GET["completion"];
-    // echo '<br>'.$completion;
+    
+    if(isset($_GET["completion"])) $completion = $_GET["completion"];
+    
   }
 
   ?>
@@ -35,30 +38,13 @@ include_once "partials/header.php";
         />
       <ul class="nav__links">
         <li class="nav__item">
-          <a class="nav__link" href="transfer.php">Transfer Money</a>
+          <a class="nav__link" href="index.php?page=transfer">Transfer Money</a>
         </li>
         <li class="nav__item">
-          <a class="nav__link" href="loan.php">Request a Loan</a>
+          <a class="nav__link" href="index.php?page=loan">Request a Loan</a>
         </li>
       </ul>
-      <a class="nav__link" href="index.php">Logout</a>
-      <div class="nav__manage_acc">
-        <button type="button">Manage Account</button>
-        <div class="dropdown hidden">
-          <li>
-            <!-- Redirect to transfer.php -->
-            <a href="transfer.php">Transfer Money</a>
-          </li>
-          <li>
-            <!-- Redirect to loan.php -->
-            <a href="loan.php">Request a Loan</a>
-          </li>
-          <li>
-            <!-- Return to Index, destroy session -->
-            <a href="logout.php">Logout</a>
-          </li>
-        </div>
-      </div>
+      <a class="nav__link" href="index.php?page=logout">Logout</a>
     </nav>
     </header>
 

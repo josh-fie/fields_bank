@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validate Amount
-    include_once "./partials/validateAmount.php";
+    include_once "functions/validateAmount.php";
     [$loan_amount, $errors] = validateAmount($loan_amount, $errors);
 
     if(empty($errors)) {
@@ -128,10 +128,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
               $mysqli->close();
 
               // Redirect to Dashboard - Unsuccessful
-              header('Location: dashboard.php?completion=Loan+Request+Unsuccessful');
+              header('Location: index.php?completion=Loan+Request+Unsuccessful&page=dashboard');
             } else if ($arrayLength >= 6) {
 
-              include_once "./partials/loan_transaction.php";
+              include_once "partials/loan_transaction.php";
 
             };
         // }
@@ -140,9 +140,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 };
 
 ?>
-<?php
-include_once "partials/header.php";
-?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  <?php include_once "partials/header.php"; ?>
   
   <script defer src="dash_script.js"></script>
 
@@ -160,12 +162,12 @@ include_once "partials/header.php";
         />
         <!-- <ul class="nav__links">
         </ul> -->
-        <a class="nav__link" href="index.php">Logout</a>
+        <a class="nav__link" href="index.php?page=logout">Logout</a>
       </nav>
     </header>
 
     <!-- Return Button -->
-    <a href="dashboard.php" class="btn--back"><-- Back</a>
+    <a href="index.php?page=dashboard" class="btn--back"><-- Back</a>
 
       <!-- LOAN FORM -->
     <div class="operation operation--loan">

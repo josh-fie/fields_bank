@@ -212,14 +212,12 @@ const startLogOutTimer = function () {
       clearInterval(timer);
       
       // call logout.php 
-      window.location.href = 'logout.php';
+      window.location.href = 'index.php?page=logout';
     }
 
     //Decrease 1 second
     time--; //this must come after the conditional otherwise you will be logged out on 1 second instead of after 0.
   };
-  // //Set time to 5 minutes
-  // let time = 100; //in seconds
 
   //Call the timer every second
   tick();
@@ -271,7 +269,7 @@ let time = 300; //in seconds
 
 // Login - this won't be an event listener but called immediately.
 
-// Data Template!!!!!!!!!!!!!!
+// Data Template
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -342,7 +340,7 @@ fetch('../retrieve_dash.php', {
     if (error instanceof SyntaxError && error.message.includes('JSON')) {
       // Redirect to logout.php if the response is not valid JSON
       alert('Something went wrong. You will now be logged out');
-      window.location.href = 'logout.php';
+      window.location.href = 'index.php?page=logout';
     } else if (error instanceof TypeError && error.message.includes('Cannot set properties of null')) {
       return
       // console.error('Not Dashboard Error:', error);
