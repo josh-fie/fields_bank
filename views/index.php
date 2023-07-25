@@ -39,7 +39,6 @@
           <!-- <span class="highlight">minimalist</span> -->
         </h1>
         <h4>Community banking with a personal touch.</h4>
-        <button class="btn--text btn--scroll-to">Learn more &DownArrow;</button>
         <div class="showcase__login">
           <h2>Internet Banking</h2>
           <a class="btn" href="index.php?page=login">Login</a>

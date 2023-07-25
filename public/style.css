@@ -423,7 +423,7 @@ h4 {
   position: relative;
 
   /* IN THE END */
-  overflow: hidden;
+  overflow-y: visible;
 }
 
 .slide {
@@ -1038,10 +1038,6 @@ h2 {
     bottom: -5%;
   }
 
-  .slider {
-    overflow: visible;
-  }
-
 }
 
 @media (max-width: 600px) {
@@ -1052,7 +1048,6 @@ h2 {
 
   .slider {
     height: 75rem;
-    overflow: visible;
   }
 
   .slide {
@@ -1201,7 +1196,6 @@ h2 {
 
   .slider {
     height: 100rem;
-    overflow: visible;
   }
 
   .movements__row {
@@ -1215,6 +1209,5 @@ h2 {
 @media (max-width: 350px) {
   .slider {
     height: 125rem;
-    overflow: visible;
   }
 }

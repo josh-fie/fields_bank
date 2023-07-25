@@ -364,8 +364,6 @@ const closeModal = function () {
   time = 300;
 };
 
-// btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
@@ -412,3 +410,43 @@ const handleHover = function (e) {
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1)); //mouseout is the opposite of mouseover
+
+// Link to Contact Section Click
+const contactLink = document.querySelector('a[href="#section--contact"]');
+
+contactLink.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const element = document.querySelector('.section--contact');
+
+  //Matching strategy
+    
+    let headerOffset;
+
+    // Get the root font size in pixels (based on the computed style)
+    const computedStyles = window.getComputedStyle(nav);
+    const height = computedStyles.getPropertyValue('height');
+    const parsedHeight = parseInt(height, 10);
+    console.log(height, parsedHeight);
+
+    const NavValueInPixels = parsedHeight;
+
+    // If section hidden then add offset to scroll
+    if(element.classList.contains('section--hidden')) {
+        headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
+        console.log('Section hidden. Offset increased');
+    } else {
+        headerOffset = NavValueInPixels; //should be 9rem value
+    }
+
+    const elementPosition = element.getBoundingClientRect().top;
+
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+    const elementPos = elementPosition + window.scrollY;
+
+    // Scroll to the desired position
+    window.scrollTo({
+      top: elementPos,
+      behavior: 'smooth', // Optional: Add smooth scrolling effect
+    });
+});

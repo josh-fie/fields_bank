@@ -1,7 +1,7 @@
 'use strict';
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
 
 const nav = document.querySelector('.nav');
 
@@ -11,28 +11,69 @@ const tabsContent = document.querySelectorAll('.operations__content');
 
 ///////////////////////////////////////
 
-//Button Scrolling
+//Learn More Button Scrolling
 
-btnScrollTo ? btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
+// btnScrollTo ? btnScrollTo.addEventListener('click', function (e) {
+//   const s1coords = section1.getBoundingClientRect();
+//   console.log(s1coords);
 
-  console.log(e.target.getBoundingClientRect());
+//   console.log(e.target.getBoundingClientRect());
 
-  console.log('Current scroll (X/Y)', window.pageXOffset, pageYOffset); //these show how far offet the current viewport is from the default 0, 0 position
+//   console.log('Current scroll (X/Y)', window.pageXOffset, pageYOffset); //these show how far offet the current viewport is from the default 0, 0 position
 
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth //these show height and width of the viewport.
-  );
+//   console.log(
+//     'height/width viewport',
+//     document.documentElement.clientHeight,
+//     document.documentElement.clientWidth //these show height and width of the viewport.
+//   );
 
-  section1.scrollIntoView({ behavior: 'smooth' });
-}) : null;
+//   section1.scrollIntoView({ behavior: 'smooth' });
+// }) : null;
 
-//Page Navigation
+//Page Navigation inc. contact button click
 
 const navLinks = document.querySelector('.nav__links');
+const contactLink = document.querySelector('a[href="#section--contact"]');
+
+contactLink.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const element = document.querySelector('.section--contact');
+
+  //Matching strategy
+    
+    let headerOffset;
+
+    // Get the root font size in pixels (based on the computed style)
+    const computedStyles = window.getComputedStyle(nav);
+    const height = computedStyles.getPropertyValue('height');
+    const parsedHeight = parseInt(height, 10);
+    console.log(height, parsedHeight, element);
+
+    const NavValueInPixels = parsedHeight;
+
+    // If section hidden then add offset to scroll
+    if(element.classList.contains('section--hidden')) {
+        headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
+        console.log('Section hidden. Offset increased');
+    } else {
+        headerOffset = NavValueInPixels; //should be 9rem value
+    }
+
+    const elementPosition = element.getBoundingClientRect().top;
+    console.log(elementPosition);
+    let onLoginPage = document.querySelector('.login__header') ? true : false;
+    console.log(onLoginPage);
+
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+    const elementPos = elementPosition + window.scrollY;
+
+    // Scroll to the desired position
+    window.scrollTo({
+      top: onLoginPage ? elementPos : offsetPosition,
+      behavior: 'smooth', // Optional: Add smooth scrolling effect
+    });
+});
 
 navLinks ? navLinks.addEventListener('click', function (e) {
   e.preventDefault();
@@ -42,22 +83,36 @@ navLinks ? navLinks.addEventListener('click', function (e) {
     const id = e.target.getAttribute('href');
     console.log(id);
 
+    // Section id
+    const element = document.querySelector(id);
+    
+    let headerOffset;
+
+    // Get the root font size in pixels (based on the computed style)
+    const computedStyles = window.getComputedStyle(nav);
+    const height = computedStyles.getPropertyValue('height');
+    const parsedHeight = parseInt(height, 10);
+    console.log(height, parsedHeight);
+
+    const NavValueInPixels = parsedHeight;
+
     // If section hidden then add offset to scroll
-    // // Get the root font size in pixels (based on the computed style)
-    // const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    if(element.classList.contains('section--hidden')) {
+        headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
+        console.log('Section hidden. Offset increased');
+    } else {
+        headerOffset = NavValueInPixels; //should be 9rem value
+    }
 
-    // // Convert the desired value in rem units to pixels
-    // const scrollToValueInRem = 2; // Change this value to the desired rem value
-    // const scrollToValueInPixels = scrollToValueInRem * rootFontSize;
+    const elementPosition = element.getBoundingClientRect().top;
 
-    // // Scroll to the desired position
-    // window.scrollTo({
-    //   top: scrollToValueInPixels,
-    //   behavior: 'smooth', // Optional: Add smooth scrolling effect
-    // });
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-
-    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+    // Scroll to the desired position
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth', // Optional: Add smooth scrolling effect
+    });
   }
 }) : null;
 
@@ -104,6 +159,7 @@ console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
+  console.log(`NavHeight: ${navHeight}`);
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 };
@@ -111,7 +167,7 @@ const stickyNav = function (entries) {
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
   threshold: 0,
-  rootMargin: `-${navHeight}px`, //margin outside of the element where function is applied. Can be hard coded as a px but better to be dynamic with bounding client rect.
+  rootMargin: `-${navHeight + 10}px`, //margin outside of the element where function is applied. Can be hard coded as a px but better to be dynamic with bounding client rect.
 });
 if((document.querySelector('header')).classList.contains('header')){headerObserver.observe(header);}
 
