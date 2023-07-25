@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
 };
 
 // login logic to check $_POST values and validate
-// session_start();
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['username']) && isset($_POST['password'])) {
 
@@ -45,10 +45,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         // if user exists check the password
         if($user) {
 
-          // var_dump($_POST);
-
           if($user['password'] === $_POST['password']) {
-            // echo 'Login successful';
+            
             // If user exists:
             session_start();
 
@@ -91,8 +89,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
           id="logo"
           designer="Josh Fieldhouse"
         />
-        <!-- <ul class="nav__links">
-        </ul> -->
       </nav>
     </header>
 

@@ -1,9 +1,6 @@
 'use strict';
 
 /////////////////////////////////////////////////
-// FIELD BANK APP
-
-/////////////////////////////////////////////////
 // Elements
 const nav = document.querySelector('.nav');
 
@@ -27,7 +24,6 @@ const btnSort = document.querySelector('.btn--sort');
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
-// const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
@@ -46,17 +42,11 @@ const formatMovementDate = function (date, locale) {
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
   const daysPassed = calcDaysPassed(new Date(), date);
-  console.log(daysPassed);
 
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  //else { not needed as this portion of code only executed if conditions above not met
-  // const day = `${date.getDate()}`.padStart(2, 0);
-  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  // const year = date.getFullYear();
-  // return `${day}/${month}/${year}`;
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
@@ -67,19 +57,16 @@ const formatCur = function (value, locale, currency) {
       style: 'currency',
       currency: currency,
     }
-  ).format(value); //make sure to pass in the thing to be formatted.
+  ).format(value);
 };
 
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  console.log(acc);
-
   // Create a map from the movements and movementDates arrays in the object (currentAccount - acc).
 
   let transMap = new Map();
       
-  // const keys = Object.keys(originalObject);
   const movArray = acc.movements;
   const movDatesArray = acc.movementDates;
   
@@ -87,31 +74,17 @@ const displayMovements = function (acc, sort = false) {
     transMap.set(movDatesArray[i], movArray[i]);
   }
 
-  console.log(transMap);
-
-  // Where sorted is true, sort the map
-  // let sortedMap = new Map([...transMap.entries()].sort((a, b) => a[1] - b[1]));
+  
 
   if(sort === true) {
     transMap = new Map([...transMap.entries()].sort((a, b) => a[1] - b[1]));
   };
-
-  console.log(transMap);
-  console.log(transMap.entries());
-
-  // Loop through the entries in the map to produce the HTML code to be inserted.
-  // transMap.forEach((mov, movDate, map) => {
-  //   const index = Array.from(map.keys()).indexOf(movDate);
-  //   console.log(`Index: ${index}, Key: ${movDate}, Value: ${mov}`);
-  // });
 
   transMap.forEach((mov, movDate, map) => {
 
     const index = Array.from(map.keys()).indexOf(movDate);
 
     const type = mov > 0 ? 'deposit' : 'withdrawal';
-
-    console.log(mov);
 
     const date = new Date(movDate); // Needs to be converted into a Javscript Date object to be able to work with it.
 
@@ -131,28 +104,6 @@ const displayMovements = function (acc, sort = false) {
   });
 
 };
-
-  // movs.forEach(function (mov, i) {
-  //   const type = mov > 0 ? 'deposit' : 'withdrawal';
-
-  //   console.log(mov);
-
-  //   const date = new Date(acc.movementDates[i]); //uses the index that is retrieved while looping through the movements to access the connected movements Dates. Needs to be converted into a Javscript Date object to be able to work with it.
-  //   const displayDate = formatMovementDate(date, acc.locale);
-
-  //   const formattedMov = formatCur(mov, acc.locale, acc.currency);
-
-  //   const html = `<div class="movements__row">
-  //       <div class="movements__type movements__type--${type}">${
-  //     i + 1
-  //   } ${type}</div>
-  //       <div class="movements__date">${displayDate}</div>
-  //       <div class="movements__value">${formattedMov}</div>
-  //     </div>`;
-
-  //   containerMovements.insertAdjacentHTML('afterbegin', html);
-  // });
-// };
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
@@ -175,7 +126,6 @@ const calcDisplaySummary = function (acc) {
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
-      // console.log(arr);
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
@@ -216,15 +166,13 @@ const startLogOutTimer = function () {
     }
 
     //Decrease 1 second
-    time--; //this must come after the conditional otherwise you will be logged out on 1 second instead of after 0.
+    time--;
   };
 
   //Call the timer every second
   tick();
   const timer = setInterval(tick, 1000);
   return timer;
-
-  //resetting on activity happens within the transfer and loan request functions
 };
 
 const convertNumber = function(arr, type) {
@@ -248,6 +196,7 @@ const constructAccount = function(fetchobj) {
   movements = convertNumber(movements, 'movs');
   movementDates = convertNumber(movementDates, 'dates');
 
+  // Account Template Object
   let accountObj = {
     owner: fetchobj.name,
     interestRate: +fetchobj.interestRate,
@@ -261,34 +210,11 @@ const constructAccount = function(fetchobj) {
 }
 
 ///////////////////////////////////////
-// Event handlers
+
 let currentAccount, timer;
 
 //Set time to 5 minutes
 let time = 300; //in seconds
-
-// Login - this won't be an event listener but called immediately.
-
-// Data Template
-const account1 = {
-  owner: 'Jonas Schmedtmann',
-  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-  interestRate: 1.2, // %
-  pin: 1111,
-
-  movementsDates: [
-    '2019-11-18T21:31:17.178Z',
-    '2019-12-23T07:42:02.383Z',
-    '2020-01-28T09:15:04.904Z',
-    '2020-04-01T10:17:24.185Z',
-    '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2022-12-21T23:36:17.929Z',
-    '2022-12-23T10:51:36.790Z',
-  ],
-  currency: 'EUR',
-  locale: 'pt-PT', // de-DE
-};
 
 //fetch to database.php (secondary which echoes back)
 fetch('../retrieve_dash.php', {
@@ -303,39 +229,37 @@ fetch('../retrieve_dash.php', {
   )
   .then(data => {
     // Handle the response data from the PHP file
-    console.log(data);
+
     // Construct CurrentAccount object.
     currentAccount = constructAccount(data);
-    console.log(currentAccount);
 
     //Create current date and time
-    //Experimenting with Internationalisation API
     const now = new Date();
     const options = {
       //config object for .DateTimeFormat and options is defined as an argument.
       hour: 'numeric',
       minute: 'numeric',
       day: 'numeric',
-      month: 'numeric', //'long', 'numeric', '2-digit',
-      year: 'numeric', //'2-digit'
-      // weekday: 'long',
+      month: 'numeric', 
+      year: 'numeric',
     };
 
     // Timer
     if (timer) clearInterval(timer); //checks for already existing timer, if so stops it so that multipe don't exist and overlap.
     timer = startLogOutTimer(); //calls the function which generates a setInterval function which counts down and prints onto the UI every second.
 
+
+    // Sets Date using locale format on dashboard
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccount.locale,
       options
-    ).format(now); //use the language locale and this will put the date in the correct format. ISO Language Code Table. //You can replace the locale with a variable which has retrieved the locale from PC.
+    ).format(now);
 
     // Update UI
     updateUI(currentAccount);
   })
   .catch(error => {
     // Handle any errors that occur during the fetch request
-    // console.error('Error:', error);
 
     if (error instanceof SyntaxError && error.message.includes('JSON')) {
       // Redirect to logout.php if the response is not valid JSON
@@ -343,7 +267,6 @@ fetch('../retrieve_dash.php', {
       window.location.href = 'index.php?page=logout';
     } else if (error instanceof TypeError && error.message.includes('Cannot set properties of null')) {
       return
-      // console.error('Not Dashboard Error:', error);
     } else {
       console.error('Error:', error);
     };
@@ -352,7 +275,6 @@ fetch('../retrieve_dash.php', {
 // Modal window
 
 const openModal = function (e) {
-  // e.preventDefault(); //prevents page from jumping up to the top when a link is clicked.
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
@@ -375,8 +297,7 @@ btnSort ? btnSort.addEventListener('click', function (e) {
   sorted = !sorted;
 }) : null;
 
-// Resize Nav Logo
-// Get a reference to your image element
+// Resize Nav Logo < 375px window width
 const imageLogo = document.querySelector('.nav__logo');
 
 // Function to update the image source based on window width
@@ -406,10 +327,11 @@ const handleHover = function (e) {
   }
 };
 
-//Passing "argument" into handler. Event functions cannot have arguments other than the e (event) so you can use the this keyword to introduce new "arguments". The below using the bind method to initially bind the opacity as this
+// Nav Opacity on Hover
+//The below using the bind method to initially bind the opacity as this
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
-nav.addEventListener('mouseout', handleHover.bind(1)); //mouseout is the opposite of mouseover
+nav.addEventListener('mouseout', handleHover.bind(1));
 
 // Link to Contact Section Click
 const contactLink = document.querySelector('a[href="#section--contact"]');
@@ -427,14 +349,12 @@ contactLink.addEventListener('click', function (e) {
     const computedStyles = window.getComputedStyle(nav);
     const height = computedStyles.getPropertyValue('height');
     const parsedHeight = parseInt(height, 10);
-    console.log(height, parsedHeight);
 
     const NavValueInPixels = parsedHeight;
 
     // If section hidden then add offset to scroll
     if(element.classList.contains('section--hidden')) {
         headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
-        console.log('Section hidden. Offset increased');
     } else {
         headerOffset = NavValueInPixels; //should be 9rem value
     }

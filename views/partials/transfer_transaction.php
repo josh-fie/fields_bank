@@ -1,37 +1,27 @@
 <?php
 // Create Movement Date
     $dateTime = new DateTime('now', new DateTimeZone('Europe/London'));
-    $isoString = $dateTime->format('c'); // 'c' = ISO 8601 format. This will produce the time offset in the +00:00 format instead of 000z as in Javscript. However, js should read this for our purposes either way.
+    $isoString = $dateTime->format('c'); // 'c' = ISO 8601 format. This will produce the time offset in the +00:00 format instead of 000z as in Javscript. However, js will read this for our purposes either way.
 
 // USER CONCATENATION
     // Concatenate movementDate onto movementsDates string
-    // echo $user["movementsDates"].'<br>'. $isoString . '<br>';
     $newMovementDates = $user["movementsDates"].', '.$isoString;
-    echo $newMovementDates.'<br>';
 
     // Concatenate -movement onto movements string
-    // echo $user["movements"].'<br>'. $dest_amount . '<br>';
     $newMovements = $user["movements"].', '.-$dest_amount;
-    echo $newMovements.'<br>';
 
 // DEST_USER/RECIPIENT CONCATENATION
     // Concatenate movementDate onto movementsDates string
-    // echo $user["movementsDates"].'<br>'. $isoString . '<br>';
     $newDestMovementDates = $dest_user["movementsDates"].', '.$isoString;
-    echo $newDestMovementDates.'<br>';
 
     // Concatenate +movement onto movements string
-    // echo $user["movements"].'<br>'. $dest_amount . '<br>';
     $newDestMovements = $dest_user["movements"].', '.$dest_amount;
-    echo $newDestMovements.'<br>';
 
 // Start a transaction
 $mysqli->begin_transaction();
 
 try {
     // Prepare the first UPDATE statement
-    // $query1 = "UPDATE your_table SET column1 = ? WHERE id = ?";
-    // $stmt1 = $mysqli->prepare($query1);
 
     // INSERT new movementDates and movements into user account
     $transfer_sql1 = "UPDATE customers SET movementsDates = ?, movements = ? WHERE id=?";
@@ -43,7 +33,7 @@ try {
     }
 
     // Bind the parameters to the first statement
-    $transfer_stmt1->bind_param("sss", $newMovementDates, $newMovements, $user["id"]); //third param may not be int and may be string
+    $transfer_stmt1->bind_param("sss", $newMovementDates, $newMovements, $user["id"]); //All three bound as strings.
 
     // Execute the first statement
     $transfer_stmt1->execute();
@@ -54,8 +44,6 @@ try {
     }
 
     // Prepare the second UPDATE statement
-    // $query2 = "UPDATE your_table SET column2 = ? WHERE id = ?";
-    // $transfer_stmt2 = $mysqli->prepare($query2);
 
     // INSERT new movementDates and movements into dest/recipient account
     $transfer_sql2 = "UPDATE customers SET movementsDates = ?, movements = ? WHERE id = ?";
@@ -67,7 +55,7 @@ try {
     }
 
     // Bind the parameters to the second statement
-    $transfer_stmt2->bind_param("sss", $newDestMovementDates, $newDestMovements, $dest_user["id"]);
+    $transfer_stmt2->bind_param("sss", $newDestMovementDates, $newDestMovements, $dest_user["id"]); //All three bound as strings
 
     // Execute the second statement
     $transfer_stmt2->execute();
@@ -91,7 +79,6 @@ try {
 } catch (Exception $e) {
 
     $errors[] = "Transaction Failed:" . $e->getMessage();
-    // echo "Transaction Failed:" . $e->getMessage();
 
     // Rollback the transaction if any query fails
     $mysqli->rollback();

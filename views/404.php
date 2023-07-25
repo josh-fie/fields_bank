@@ -17,9 +17,6 @@
           id="logo"
           designer="Josh Fieldhouse"
         />
-        <!-- <ul class="nav__links">
-        </ul> -->
-        <!-- <a class="nav__link" href="index.php?page=logout">Logout</a> -->
       </nav>
     </header>
 

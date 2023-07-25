@@ -1,22 +1,13 @@
 <?php
 
-// Session maintained
+// Session maintained: session name and id are persisted.
 session_start();
-// session name and id are persisted.
-
-// imports form.php
-
-// will need a field to be submitted which will validate again the database checking for the other user.
-
-// validate.php? add elements to error array or completion array where message can be displayed. or put completion variable in the url query when redirecting back, then GET.
 
 $errors = []; //these errors will be looped through and displayed above the form fields on this page.
 
 // login logic to check $_POST values and validate
-// session_start();
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  var_dump($_POST);
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Loan Amount Requested
     $loan_amount = $_POST['loan_amount'];
@@ -49,16 +40,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = $mysqli;
       } else {
 
-        // Check database for recipient account - need multiple items in the query: id, name, movements
+        // Check database for recipient account
         $loan_sql = sprintf("SELECT * FROM customers WHERE id='%s'", $mysqli->real_escape_string($_SESSION['customer_id']));
 
         $loan_result = $mysqli->query($loan_sql);
 
         $loan_user = $loan_result->fetch_assoc(); //returns result as an associative array and assigns to $loan_user.
-
-        echo '<br>';
-
-        var_dump($loan_user);
 
         //Check user password
         if($user_password !== $loan_user['password']) {
@@ -70,27 +57,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
       if(empty($errors) && $loan_user) {
 
         // FINAL VALIDATION AND COMPLETION OF TRANSFER
-        // if(empty($errors)) {
-          // INSERT the positive transfer amount into the recipient account movements
-          echo 'So far so good';
-          echo '<br>'.'<br>'.$loan_user["movements"] .'<br>';
 
+          // Split Strings into Arrays of separate values
           $movementsArray = explode(', ', $loan_user["movements"]);
           $movementsDatesArray = explode(', ', $loan_user["movementsDates"]);
-
-          var_dump($movementsArray, $loan_amount);
-
-          // atleast 6 seperate deposits of amounts that are 10% of requested loan amount in the last 12 months.
 
           //use needed to bring in $loan_amount variable into anonymous function scope.
 
           // Retrieve all deposits that are >= 10% of loan amount requested
+          //use needed to bring in $loan_amount variable into anonymous function scope.
           $filteredArray = array_filter($movementsArray, function($mov) use ($loan_amount) {
             return $mov >= $loan_amount * 0.1;
           });
-          
-          echo '<br>';
-          var_dump($filteredArray);
 
           // Retrieve all associated movementDates that match the indexes from array above
 
@@ -98,9 +76,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             return $movementsDatesArray[$mov];
           }, array_keys($filteredArray));
-
-          echo '<br>';
-          var_dump($filteredMovDates);
         
           // Filter out any movementDates that are older than 12 months
 
@@ -112,10 +87,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
               $interval = $date->diff($currentDateTime);
               return $interval->days <= 365; // Filter dates within 365 days (12 months)
             });
-
-            echo '<br>';
-            var_dump($finalArray);
-            echo '<br>';
 
             // Check Array size
             $arrayLength = sizeof($finalArray);
@@ -130,6 +101,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
               // Redirect to Dashboard - Unsuccessful
               header('Location: index.php?completion=Loan+Request+Unsuccessful&page=dashboard');
             } else if ($arrayLength >= 6) {
+
+              // COMPLETION OF TRANSACTION
 
               include_once "partials/loan_transaction.php";
 

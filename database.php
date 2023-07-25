@@ -12,7 +12,8 @@ try {
 
     if($mysqli->connect_errno) {
         $error = "Connection error:" . $mysqli->connect_error;
-        header("Location: login.php?databaseerror=$error");
+        // header("Location: login.php?databaseerror=$error");
+        header("Location: index.php?databaseerror=$error&page=login");
     } else{
         return $mysqli; 
     }

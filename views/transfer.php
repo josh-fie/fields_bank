@@ -1,9 +1,7 @@
 <?php
 
-// Session maintained
+// Session maintained: session name and id are persisted.
 session_start();
-// session name and id are persisted.
-
 
 $errors = []; //these errors will be looped through and displayed above the form fields on this page.
 
@@ -58,10 +56,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dest_result = $mysqli->query($dest_sql);
 
         $dest_user = $dest_result->fetch_assoc(); //returns result as an associative array and assigns to $dest_user.
-
-        // echo '<pre>';
-        // var_dump( $dest_user);
-        // echo '</pre>';
       
         // VALIDATE RECIPIENT
         if($dest_user) {
@@ -85,16 +79,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // RETRIEVE USER FROM DATABASE
       if(empty($errors)) {
+
         // Check database for user account - need password for confirmation
         $user_sql = sprintf("SELECT * FROM customers WHERE id='%s'", $mysqli->real_escape_string($_SESSION['customer_id']));
 
         $user_result = $mysqli->query($user_sql);
 
         $user = $user_result->fetch_assoc(); //returns result as an associative array and assigns to $user.
-
-        // echo '<br>' .'<pre>';
-        // var_dump($user);
-        // echo '</pre>';
       
       // VALIDATE USER
       if($user) {
@@ -102,15 +93,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($user_password === $user["password"]) {
           
 
-          // FINAL VALIDATION AND COMPLETION OF TRANSFER
-          echo $user["password"].'<br>'.'All credentials validated. Time to process Transfer'.'<br>';
+          // FINAL VALIDATION
           
           // Sum Movements
           include_once "functions/sumMovements.php";
 
           $acc_balance = sumMovements($user["movements"]);
-
-          var_dump($acc_balance).'<br>';
 
           // Check if Insufficient Funds
 
@@ -118,6 +106,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           if($transactionPoss) {
 
+            // COMPLETION OF TRANSFER
             include_once "partials/transfer_transaction.php";
 
           }
@@ -153,8 +142,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
           id="logo"
           designer="Josh Fieldhouse"
         />
-        <!-- <ul class="nav__links">
-        </ul> -->
         <a class="nav__link" href="index.php?page=logout">Logout</a>
       </nav>
     </header>

@@ -14,16 +14,12 @@ if(!($amount > 0)) {
 
   // Check for special characters other than a dot (.)
   if (preg_match('/[^\d.,]/', $amount)) {
-    // $errors[] = "Incorrect Number Format";
+    
     !in_array("Incorrect Number Format", $errors) ? $errors[] = "Incorrect Number Format" : null;
   }
 
   // Remove any commas from the loan amount input
   $amount = str_replace(',', '', $amount);
 
-  var_dump($errors);
-  echo '<br>' . $amount;
-
   return [$amount, $errors];
-
 }

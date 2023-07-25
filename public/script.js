@@ -1,34 +1,11 @@
 'use strict';
 
-// const btnScrollTo = document.querySelector('.btn--scroll-to');
-// const section1 = document.querySelector('#section--1');
-
 const nav = document.querySelector('.nav');
-
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
 ///////////////////////////////////////
-
-//Learn More Button Scrolling
-
-// btnScrollTo ? btnScrollTo.addEventListener('click', function (e) {
-//   const s1coords = section1.getBoundingClientRect();
-//   console.log(s1coords);
-
-//   console.log(e.target.getBoundingClientRect());
-
-//   console.log('Current scroll (X/Y)', window.pageXOffset, pageYOffset); //these show how far offet the current viewport is from the default 0, 0 position
-
-//   console.log(
-//     'height/width viewport',
-//     document.documentElement.clientHeight,
-//     document.documentElement.clientWidth //these show height and width of the viewport.
-//   );
-
-//   section1.scrollIntoView({ behavior: 'smooth' });
-// }) : null;
 
 //Page Navigation inc. contact button click
 
@@ -39,8 +16,6 @@ contactLink.addEventListener('click', function (e) {
   e.preventDefault();
 
   const element = document.querySelector('.section--contact');
-
-  //Matching strategy
     
     let headerOffset;
 
@@ -48,22 +23,18 @@ contactLink.addEventListener('click', function (e) {
     const computedStyles = window.getComputedStyle(nav);
     const height = computedStyles.getPropertyValue('height');
     const parsedHeight = parseInt(height, 10);
-    console.log(height, parsedHeight, element);
 
     const NavValueInPixels = parsedHeight;
 
     // If section hidden then add offset to scroll
     if(element.classList.contains('section--hidden')) {
         headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
-        console.log('Section hidden. Offset increased');
     } else {
         headerOffset = NavValueInPixels; //should be 9rem value
     }
 
     const elementPosition = element.getBoundingClientRect().top;
-    console.log(elementPosition);
     let onLoginPage = document.querySelector('.login__header') ? true : false;
-    console.log(onLoginPage);
 
     const offsetPosition = elementPosition + window.scrollY - headerOffset;
     const elementPos = elementPosition + window.scrollY;
@@ -71,7 +42,7 @@ contactLink.addEventListener('click', function (e) {
     // Scroll to the desired position
     window.scrollTo({
       top: onLoginPage ? elementPos : offsetPosition,
-      behavior: 'smooth', // Optional: Add smooth scrolling effect
+      behavior: 'smooth',
     });
 });
 
@@ -81,7 +52,6 @@ navLinks ? navLinks.addEventListener('click', function (e) {
   //Matching strategy
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
-    console.log(id);
 
     // Section id
     const element = document.querySelector(id);
@@ -92,14 +62,12 @@ navLinks ? navLinks.addEventListener('click', function (e) {
     const computedStyles = window.getComputedStyle(nav);
     const height = computedStyles.getPropertyValue('height');
     const parsedHeight = parseInt(height, 10);
-    console.log(height, parsedHeight);
 
     const NavValueInPixels = parsedHeight;
 
     // If section hidden then add offset to scroll
     if(element.classList.contains('section--hidden')) {
         headerOffset = NavValueInPixels + 60; //should account for scroll up of section.
-        console.log('Section hidden. Offset increased');
     } else {
         headerOffset = NavValueInPixels; //should be 9rem value
     }
@@ -155,11 +123,10 @@ nav.addEventListener('mouseout', handleHover.bind(1)); //mouseout is the opposit
 
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(`NavHeight: ${navHeight}`);
+  
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 };
@@ -199,7 +166,6 @@ const imgTargets = document.querySelectorAll('img[data-src]');
 
 const loadImg = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) return;
 
@@ -221,16 +187,16 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
-//Building a Slider Component Parts 1 and 2
+//Slider
 const slider = function () {
-  //contains all sliders JS and doesn't pollute global namespace.
+  
   const slides = document.querySelectorAll('.slide');
   const btnLeft = document.querySelector('.slider__btn--left');
   const btnRight = document.querySelector('.slider__btn--right');
   const dotContainer = document.querySelector('.dots');
 
   let curSlide = 0;
-  const maxSlide = slides.length; //can also use the length property on the NodeList slides.
+  const maxSlide = slides.length;
 
   //Functions
   //Creating Dots
@@ -296,7 +262,6 @@ const slider = function () {
   btnLeft ? btnLeft.addEventListener('click', prevSlide) : null;
 
   document.addEventListener('keydown', function (e) {
-    console.log(e);
     if (e.key === 'ArrowLeft') prevSlide();
     e.key === 'ArrowRight' && nextSlide(); //short circuting applied here
   });
@@ -312,7 +277,6 @@ const slider = function () {
 tabs ? slider() : null;
 
 // Resize Nav Logo
-// Get a reference to your image element
 const imageLogo = document.querySelector('.nav__logo');
 const operationsButtons = document.querySelectorAll('.btn.operations__tab');
 

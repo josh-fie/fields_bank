@@ -1,8 +1,8 @@
 <?php
 
-// Session maintained
+// Session maintained: session name and id are persisted.
 session_start();
-// session name and id are persisted.
+
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +21,7 @@ session_start();
 
   if($_GET) {
     
+    // Completion Message sent to be displayed following Loan or Transfer
     if(isset($_GET["completion"])) $completion = $_GET["completion"];
     
   }

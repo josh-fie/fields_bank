@@ -40,7 +40,6 @@ try {
 } catch (Exception $e) {
 
     $errors[] = "Transaction Failed:" . $e->getMessage();
-    // echo "Transaction Failed:" . $e->getMessage();
 
     // Close the statements and database connection
     $transfer_stmt1->close();

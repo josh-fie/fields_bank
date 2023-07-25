@@ -5,17 +5,13 @@ $uri;
 if (!isset($_GET['page'])) {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 } else {
-    // var_dump($_GET);
     $uri = $_GET['page'];
 }
 
-// Find what comes after the final /
+// Add / before final word
 $uri = "/" . basename($uri);
-// echo '<br>';
-// var_dump($uri);
 
-// exit;
-
+// If final word is root parent /public/ direct to index.
 if ($uri === "/public") {
     $uri = '/'; 
 }
@@ -31,14 +27,9 @@ if ($uri === "/logout") {
     }
 
     $uri = '/';
-    // echo '<br>';
-    // var_dump($uri);
 }
 
-// echo '<br>';
-// var_dump($uri);
-
-
+// Routing
 $routes = [
     '/' => __DIR__ . '/views/index.php',
     '/home' => __DIR__ . '/views/index.php',
@@ -51,7 +42,7 @@ $routes = [
 function routeToPage($uri, $routes) {
     if (array_key_exists($uri, $routes)) {
         require $routes[$uri];
-        // include query in new link for completion from loan and transfer requests.
+        
     } else {
         abort();
     }

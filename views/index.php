@@ -33,10 +33,8 @@
       <div class="showcase">
         <h1>
           Experience
-          <!-- Green highlight effect -->
-          <span class="highlight">Rural</span>
+          <span >Rural</span>
           banking<br />
-          <!-- <span class="highlight">minimalist</span> -->
         </h1>
         <h4>Community banking with a personal touch.</h4>
         <div class="showcase__login">
